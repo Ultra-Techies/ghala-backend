@@ -30,6 +30,6 @@ public class Users {
     private String phoneNumber;
     private String assignedWarehouse;
     private String password;
-    @ManyToMany
-    private Collection<Roles> roles;
+    //@ManyToMany
+    //private Collection<Roles> roles;
 }
