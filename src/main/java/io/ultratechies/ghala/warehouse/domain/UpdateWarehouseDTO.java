@@ -6,7 +6,6 @@ import lombok.*;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@NoArgsConstructor
 public class UpdateWarehouseDTO {
     private Long id;
     private String name;
