@@ -12,7 +12,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order {
+public class Orders {
     @Id
     @SequenceGenerator(
             name = "users_sequence",
@@ -31,8 +31,7 @@ public class Order {
     private String customerId;
     private String value;
     private String status;
-    private String Route;
-    private List<OrderItems> items;
+    //private List<OrderItems> items;
     private String route;
 
 }
