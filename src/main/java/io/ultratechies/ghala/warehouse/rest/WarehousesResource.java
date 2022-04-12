@@ -1,6 +1,5 @@
 package io.ultratechies.ghala.warehouse.rest;
 
-import io.ultratechies.ghala.users.domain.Users;
 import io.ultratechies.ghala.warehouse.domain.Warehouse;
 import io.ultratechies.ghala.warehouse.service.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,11 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/warehouses")
-public class WarehouseResource {
+public class WarehousesResource {
     private final WarehouseService warehouseService;
 
     @Autowired
-    public WarehouseResource(WarehouseService warehouseService){
+    public WarehousesResource(WarehouseService warehouseService){
         this.warehouseService=warehouseService;
     }
 
