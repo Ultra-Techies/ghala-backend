@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,5 +32,5 @@ public class Users {
     private String assignedWarehouse;
     private String password;
     @ManyToMany
-    private Collection<Roles> roles;
+    private List<Roles> roles;
 }
