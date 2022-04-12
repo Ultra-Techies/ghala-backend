@@ -1,5 +1,6 @@
 package io.ultratechies.ghala.warehouse.rest;
 
+import io.ultratechies.ghala.warehouse.domain.UpdateWarehouseDTO;
 import io.ultratechies.ghala.warehouse.domain.Warehouse;
 import io.ultratechies.ghala.warehouse.service.WarehouseService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,12 @@ public class WarehouseResource {
     @DeleteMapping("{warehouseId}")
     public ResponseEntity deleteWarehouse(@PathVariable Long warehouseId){
         warehouseService.deleteWarehouse(warehouseId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping()
+    public ResponseEntity updateWarehouse(@RequestBody UpdateWarehouseDTO updateWarehouseDTO){
+        warehouseService.updateWarehouse(updateWarehouseDTO);
         return ResponseEntity.ok().build();
     }
 
