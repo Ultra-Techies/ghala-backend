@@ -40,7 +40,7 @@ public class UserService {
     @Transactional
     public void updateUser(UpdateUserDTO updateUserDTO){
         Users user= userRepository.findById(updateUserDTO.getId())
-                .orElseThrow(() ->new IllegalStateException("Warehouse with ID "+ updateUserDTO.getId()+" does not exist!"));
+                .orElseThrow(() ->new IllegalStateException("User with ID "+ updateUserDTO.getId()+" does not exist!"));
         if (updateUserDTO.getEmail() != null &&
                 updateUserDTO.getEmail().length() > 0 &&
                 !Objects.equals(user.getEmail(),updateUserDTO.getEmail())) {
