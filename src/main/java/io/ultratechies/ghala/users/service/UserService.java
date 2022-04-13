@@ -46,6 +46,21 @@ public class UserService {
                 !Objects.equals(user.getEmail(),updateUserDTO.getEmail())) {
             user.setEmail(updateUserDTO.getEmail());
             }
+        if (updateUserDTO.getPhoneNumber() != null &&
+                updateUserDTO.getPhoneNumber().length() > 0 &&
+                !Objects.equals(user.getPhoneNumber(),updateUserDTO.getPhoneNumber())) {
+            user.setPhoneNumber(updateUserDTO.getPhoneNumber());
+        }
+        if (updateUserDTO.getAssignedWarehouse() != null &&
+                updateUserDTO.getAssignedWarehouse().length() > 0 &&
+                !Objects.equals(user.getAssignedWarehouse(),updateUserDTO.getAssignedWarehouse())) {
+            user.setAssignedWarehouse(updateUserDTO.getAssignedWarehouse());
+        }
+        if (updateUserDTO.getPassword() != null &&
+                updateUserDTO.getPassword().length() > 0 &&
+                !Objects.equals(user.getPassword(),updateUserDTO.getPassword())) {
+            user.setPassword(updateUserDTO.getPassword());
+        }
 
     }
 
