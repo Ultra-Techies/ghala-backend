@@ -3,6 +3,7 @@ package io.ultratechies.ghala.users.rest;
 import io.ultratechies.ghala.users.domain.Users;
 import io.ultratechies.ghala.users.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UsersResource {
+    @Autowired
     private final UserService userService;
 
     @GetMapping()
