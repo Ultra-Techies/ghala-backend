@@ -29,4 +29,5 @@ public class Inventory {
     private Integer quantity;
     private Integer ppu;
     private String status;
+    private Long warehouseId;
 }
