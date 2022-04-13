@@ -3,7 +3,9 @@ package io.ultratechies.ghala.orders.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.print.attribute.standard.DateTimeAtCreation;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,9 +31,9 @@ public class Orders {
     private Date due;
     private String deliveryWindow;
     private String customerId;
-    private String value;
+    private Integer value;
     private String status;
-    //private List<OrderItems> items;
+    private List<OrderItemDTO> items;
     private String route;
 
 }
