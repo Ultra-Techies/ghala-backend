@@ -40,12 +40,27 @@ public class UserService {
     @Transactional
     public void updateUser(UpdateUserDTO updateUserDTO){
         Users user= userRepository.findById(updateUserDTO.getId())
-                .orElseThrow(() ->new IllegalStateException("Warehouse with ID "+ updateUserDTO.getId()+" does not exist!"));
+                .orElseThrow(() ->new IllegalStateException("User with ID "+ updateUserDTO.getId()+" does not exist!"));
         if (updateUserDTO.getEmail() != null &&
                 updateUserDTO.getEmail().length() > 0 &&
                 !Objects.equals(user.getEmail(),updateUserDTO.getEmail())) {
             user.setEmail(updateUserDTO.getEmail());
             }
+        if (updateUserDTO.getPhoneNumber() != null &&
+                updateUserDTO.getPhoneNumber().length() > 0 &&
+                !Objects.equals(user.getPhoneNumber(),updateUserDTO.getPhoneNumber())) {
+            user.setPhoneNumber(updateUserDTO.getPhoneNumber());
+        }
+        if (updateUserDTO.getAssignedWarehouse() != null &&
+                updateUserDTO.getAssignedWarehouse().length() > 0 &&
+                !Objects.equals(user.getAssignedWarehouse(),updateUserDTO.getAssignedWarehouse())) {
+            user.setAssignedWarehouse(updateUserDTO.getAssignedWarehouse());
+        }
+        if (updateUserDTO.getPassword() != null &&
+                updateUserDTO.getPassword().length() > 0 &&
+                !Objects.equals(user.getPassword(),updateUserDTO.getPassword())) {
+            user.setPassword(updateUserDTO.getPassword());
+        }
 
     }
 

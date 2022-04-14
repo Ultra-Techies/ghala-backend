@@ -1,17 +1,18 @@
-package io.ultratechies.ghala.inventory.domain;
+package io.ultratechies.ghala.orders.domain;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
-@Entity
 @Getter
 @Setter
 @ToString
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Inventory {
+@RequiredArgsConstructor
+@Entity
+public class OrderItemDTO {
     @Id
     @SequenceGenerator(
             name = "users_sequence",
@@ -24,10 +25,8 @@ public class Inventory {
             generator="users_sequence"
     )
     private Long sku;
-    private String name;
-    private String category;
     private Integer quantity;
+    private String name;
     private Integer ppu;
-    private String status;
-    private Long warehouseId;
+    private Integer totalPrice;
 }

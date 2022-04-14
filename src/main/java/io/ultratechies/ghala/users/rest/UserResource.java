@@ -4,6 +4,7 @@ import io.ultratechies.ghala.users.domain.UpdateUserDTO;
 import io.ultratechies.ghala.users.domain.Users;
 import io.ultratechies.ghala.users.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserResource {
+    @Autowired
     private final UserService userService;
 
     @GetMapping("{userId}")
