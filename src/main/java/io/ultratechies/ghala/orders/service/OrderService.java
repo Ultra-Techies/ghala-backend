@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,12 +26,16 @@ public class OrderService {
         return orderRepository.findAllByWarehouseId(warehouseId);
     }
 
+    public Optional<Orders> getOrderById(Long orderId){
+        return orderRepository.findById(orderId);
+    }
+
     public ResponseEntity createOrder(Orders order){
         orderRepository.save(order);
         return ResponseEntity.ok().build();
     }
-    public ResponseEntity deleteOrder(Orders order){
-        orderRepository.delete(order);
+    public ResponseEntity deleteOrder(Long orderId){
+        orderRepository.deleteById(orderId);
         return ResponseEntity.ok().build();
     }
 
