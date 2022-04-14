@@ -3,6 +3,7 @@ package io.ultratechies.ghala.orders.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,7 @@ public class Orders {
             generator="users_sequence"
     )
     private Long id;
-    private Date created;
+    private LocalDateTime created;
     private Date due;
     private String deliveryWindow;
     private String customerId;
