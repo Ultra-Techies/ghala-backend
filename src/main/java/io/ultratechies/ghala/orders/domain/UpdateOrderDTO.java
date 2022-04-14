@@ -15,5 +15,5 @@ public class UpdateOrderDTO {
     private String deliveryWindow;
     private Integer value;
     private String status;
-    private List<OrderItemDTO> items;
+    private List<OrderItemDTO>items;
 }

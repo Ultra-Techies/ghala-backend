@@ -3,7 +3,7 @@ package io.ultratechies.ghala.orders.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.print.attribute.standard.DateTimeAtCreation;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +33,9 @@ public class Orders {
     private String customerId;
     private Integer value;
     private String status;
+    @OneToMany
     private List<OrderItemDTO> items;
     private String route;
+    private Long warehouseId;
 
 }
