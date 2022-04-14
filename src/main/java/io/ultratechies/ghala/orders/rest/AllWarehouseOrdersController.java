@@ -16,7 +16,7 @@ public class AllWarehouseOrdersController {
     @Autowired
     private final OrderService orderService;
 
-    @GetMapping("{warehouseId")
+    @GetMapping("{warehouseId}")
     public List<Orders> getOrdersByWarehouse(@PathVariable Long warehouseId){
         return orderService.getOrdersByWarehouse(warehouseId);
     }
