@@ -1,6 +1,7 @@
 package io.ultratechies.ghala.inventory.rest;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.ultratechies.ghala.inventory.domain.Inventory;
 import io.ultratechies.ghala.inventory.domain.InventoryUpdateDTO;
 import io.ultratechies.ghala.inventory.service.InventoryService;
@@ -14,14 +15,15 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/inventory")
+@RequestMapping("/api/inventory")
 public class InventoryResource {
     @Autowired
     private final InventoryService inventoryService;
 
     @ApiOperation("Get All Inventory by Warehouse")
-    @GetMapping("{warehouseId}")
-    public List<Inventory> getInventoryByWarehouse(@PathVariable Long warehouseId){
+    @GetMapping("/{warehouseId}")
+    public List<Inventory> getInventoryByWarehouse(@ApiParam(name="id", required = true,example = "1")
+                                                   @PathVariable Long warehouseId){
         return inventoryService.getInventoryByWarehouse(warehouseId);
     }
 
@@ -33,8 +35,9 @@ public class InventoryResource {
     }
 
     @ApiOperation("Delete Inventory Item")
-    @DeleteMapping("{sku}")
-    public ResponseEntity deleteInventoryItem(@PathVariable Long sku){
+    @DeleteMapping("/{sku}")
+    public ResponseEntity deleteInventoryItem(@ApiParam(name="id", required = true,example = "1")
+                                              @PathVariable Long sku){
         inventoryService.deleteInventoryItem(inventoryService.getInventoryItemBySku(sku));
         return ResponseEntity.ok().build();
     }

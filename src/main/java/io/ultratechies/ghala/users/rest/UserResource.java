@@ -1,5 +1,6 @@
 package io.ultratechies.ghala.users.rest;
 
+import io.swagger.annotations.ApiParam;
 import io.ultratechies.ghala.users.domain.UpdateUserDTO;
 import io.ultratechies.ghala.users.domain.Users;
 import io.ultratechies.ghala.users.service.UserService;
@@ -12,13 +13,14 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserResource {
     @Autowired
     private final UserService userService;
 
-    @GetMapping("{userId}")
-    public Optional<Users> getUserById(@PathVariable Long userId){
+    @GetMapping("/{userId}")
+    public Optional<Users> getUserById(@ApiParam(name="id", required = true,example = "1")
+                                       @PathVariable Long userId){
         Optional<Users> user=userService.getUserById(userId);
         return user;
     }
@@ -29,8 +31,9 @@ public class UserResource {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("{userId}")
-    public ResponseEntity deleteUser(@PathVariable Long userId){
+    @DeleteMapping("/{userId}")
+    public ResponseEntity deleteUser(@ApiParam(name="id", required = true,example = "1")
+                                     @PathVariable Long userId){
         userService.deleteUser(userId);
         return ResponseEntity.ok().build();
     }

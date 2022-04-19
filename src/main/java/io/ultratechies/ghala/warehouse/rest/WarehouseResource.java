@@ -1,6 +1,7 @@
 package io.ultratechies.ghala.warehouse.rest;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.ultratechies.ghala.warehouse.domain.UpdateWarehouseDTO;
 import io.ultratechies.ghala.warehouse.domain.Warehouse;
 import io.ultratechies.ghala.warehouse.service.WarehouseService;
@@ -17,8 +18,9 @@ public class WarehouseResource {
     private final WarehouseService warehouseService;
 
     @ApiOperation("Fetch Warehouse Info by ID")
-    @GetMapping("{warehouseId}")
-    public ResponseEntity<Optional<Warehouse>> getWarehouseById(@PathVariable Long warehouseId){
+    @GetMapping("/{warehouseId}")
+    public ResponseEntity<Optional<Warehouse>> getWarehouseById(@ApiParam(name="id", required = true,example = "1")
+                                                                @PathVariable Long warehouseId){
         var wh=warehouseService.getWarehouseById(warehouseId);
         return ResponseEntity.ok(wh);
     }
@@ -31,8 +33,9 @@ public class WarehouseResource {
     }
 
     @ApiOperation("Delete Warehouse by Id")
-    @DeleteMapping("{warehouseId}")
-    public ResponseEntity deleteWarehouse(@PathVariable Long warehouseId){
+    @DeleteMapping("/{warehouseId}")
+    public ResponseEntity deleteWarehouse(@ApiParam(name="id", required = true,example = "1")
+                                          @PathVariable Long warehouseId){
         warehouseService.deleteWarehouse(warehouseId);
         return ResponseEntity.ok().build();
     }
