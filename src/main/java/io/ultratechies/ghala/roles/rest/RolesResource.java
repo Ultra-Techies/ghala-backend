@@ -1,5 +1,6 @@
 package io.ultratechies.ghala.roles.rest;
 
+import io.swagger.annotations.ApiOperation;
 import io.ultratechies.ghala.roles.domain.Roles;
 import io.ultratechies.ghala.roles.service.RolesService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class RolesResource {
     @Autowired
     private final RolesService rolesService;
 
+    @ApiOperation("Get A list of all roles")
     @GetMapping()
     public List<Roles> getRoles(){
         return rolesService.getAllRoles();

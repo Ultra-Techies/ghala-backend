@@ -1,5 +1,6 @@
 package io.ultratechies.ghala.inventory.rest;
 
+import io.swagger.annotations.ApiOperation;
 import io.ultratechies.ghala.inventory.domain.Inventory;
 import io.ultratechies.ghala.inventory.service.InventoryService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class AllInventoryResource {
     @Autowired
     private final InventoryService inventoryService;
 
+    @ApiOperation("Get All Inventory")
     @GetMapping()
     public List<Inventory> getAllInventory(){
         return inventoryService.getAllInventory();

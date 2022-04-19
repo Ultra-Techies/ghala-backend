@@ -1,5 +1,6 @@
 package io.ultratechies.ghala.orders.rest;
 
+import io.swagger.annotations.ApiOperation;
 import io.ultratechies.ghala.orders.domain.Orders;
 import io.ultratechies.ghala.orders.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class AllOrdersController {
     @Autowired
     private final OrderService orderService;
 
+    @ApiOperation("Get All Orders")
     @GetMapping
     public List<Orders> getAllOrders(){
         return orderService.getAllOrders();
