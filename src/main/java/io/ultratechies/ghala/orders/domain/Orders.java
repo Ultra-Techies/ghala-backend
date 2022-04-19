@@ -1,18 +1,23 @@
 package io.ultratechies.ghala.orders.domain;
 
+import com.vladmihalcea.hibernate.type.json.JsonType;
 import lombok.*;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @Builder
+@TypeDef(
+        name = "json",
+        typeClass = JsonType.class
+)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Orders {
@@ -34,7 +39,8 @@ public class Orders {
     private String customerId;
     private Integer value;
     private String status;
-    @OneToMany
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
     private List<OrderItemDTO> items;
     private String route;
     private Long warehouseId;
