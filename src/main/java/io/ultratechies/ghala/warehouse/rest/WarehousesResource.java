@@ -1,5 +1,6 @@
 package io.ultratechies.ghala.warehouse.rest;
 
+import io.swagger.annotations.ApiOperation;
 import io.ultratechies.ghala.warehouse.domain.Warehouse;
 import io.ultratechies.ghala.warehouse.service.WarehouseService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.List;
 public class WarehousesResource {
     private final WarehouseService warehouseService;
 
+    @ApiOperation("Get All Warehouses")
     @GetMapping
     public ResponseEntity<List<Warehouse>> getAllWarehouses(){
         var whs = warehouseService.getAllWarehouses();

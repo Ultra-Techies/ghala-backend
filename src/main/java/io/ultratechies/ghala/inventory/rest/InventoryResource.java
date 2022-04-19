@@ -1,5 +1,6 @@
 package io.ultratechies.ghala.inventory.rest;
 
+import io.swagger.annotations.ApiOperation;
 import io.ultratechies.ghala.inventory.domain.Inventory;
 import io.ultratechies.ghala.inventory.domain.InventoryUpdateDTO;
 import io.ultratechies.ghala.inventory.service.InventoryService;
@@ -18,23 +19,27 @@ public class InventoryResource {
     @Autowired
     private final InventoryService inventoryService;
 
+    @ApiOperation("Get All Inventory by Warehouse")
     @GetMapping("{warehouseId}")
     public List<Inventory> getInventoryByWarehouse(@PathVariable Long warehouseId){
         return inventoryService.getInventoryByWarehouse(warehouseId);
     }
 
+    @ApiOperation("Create Inventory Item")
     @PostMapping
     public ResponseEntity createInventoryItem(@RequestBody Inventory inventoryItem){
         inventoryService.createInventoryItem(inventoryItem);
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation("Delete Inventory Item")
     @DeleteMapping("{sku}")
     public ResponseEntity deleteInventoryItem(@PathVariable Long sku){
         inventoryService.deleteInventoryItem(inventoryService.getInventoryItemBySku(sku));
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation("Update Inventory Item")
     @PutMapping
     public ResponseEntity updateInventoryItem(@RequestBody InventoryUpdateDTO inventoryUpdateDTO){
         inventoryService.updateInventoryItem(inventoryUpdateDTO);

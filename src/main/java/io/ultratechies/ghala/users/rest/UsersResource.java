@@ -1,5 +1,6 @@
 package io.ultratechies.ghala.users.rest;
 
+import io.swagger.annotations.ApiOperation;
 import io.ultratechies.ghala.users.domain.Users;
 import io.ultratechies.ghala.users.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class UsersResource {
     @Autowired
     private final UserService userService;
 
+    @ApiOperation("Get All Users")
     @GetMapping()
     public ResponseEntity<List<Users>> getAllUsers(){
         var users= userService.getAllUsers();
