@@ -10,8 +10,6 @@ import java.util.List;
 @Setter
 @RequiredArgsConstructor
 @Entity
-@ToString
-@NoArgsConstructor
 public class DeliveryNote {
     @Id
     @SequenceGenerator(

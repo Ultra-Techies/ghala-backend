@@ -1,13 +1,14 @@
 package io.ultratechies.ghala.orders.domain;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
 import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 public class UpdateOrderDTO {
     private Long id;

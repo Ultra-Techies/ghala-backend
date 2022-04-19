@@ -3,7 +3,6 @@ import lombok.*;
 
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 public class UpdateUserDTO {
     private Long id;
