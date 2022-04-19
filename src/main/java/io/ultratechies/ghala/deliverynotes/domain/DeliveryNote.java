@@ -1,16 +1,16 @@
-package io.ultratechies.ghala.inventory.domain;
+package io.ultratechies.ghala.deliverynotes.domain;
 
+import io.ultratechies.ghala.orders.domain.Orders;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Entity
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Inventory {
+@RequiredArgsConstructor
+@Entity
+public class DeliveryNote {
     @Id
     @SequenceGenerator(
             name = "users_sequence",
@@ -22,11 +22,11 @@ public class Inventory {
             strategy = GenerationType.SEQUENCE,
             generator="users_sequence"
     )
-    private Long sku;
-    private String name;
-    private String category;
-    private Integer quantity;
-    private Integer ppu;
+    private Long id;
+    private String Route;
+    @OneToMany
+    private List<Orders> orders;
     private String status;
+    private String deliveryWindow;
     private Long warehouseId;
 }
