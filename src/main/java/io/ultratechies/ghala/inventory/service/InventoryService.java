@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,8 +25,10 @@ public class InventoryService {
         return inventoryRepository.findByWarehouseId(warehouseId);
     }
 
-    public Inventory getInventoryItemBySku(Long sku){
-        return inventoryRepository.findBySku(sku);
+    public Optional<Inventory> getInventoryItemBySku(Long sku){
+        //Inventory inventoryItem=inventoryRepository.findBySku(sku);
+        return Optional.ofNullable(Optional.ofNullable(inventoryRepository.findBySku(sku))
+                .orElseThrow(() -> new IllegalStateException("Inventory Item With SKU code " + sku + " does not exist!")));
     }
 
     public void createInventoryItem(Inventory item){
@@ -33,8 +36,11 @@ public class InventoryService {
         ResponseEntity.ok().build();
     }
 
-    public void deleteInventoryItem(Inventory item){
-        inventoryRepository.delete(item);
+    public void deleteInventoryItem(Long sku){
+        if (!inventoryRepository.existsById(sku)){
+            throw new IllegalArgumentException("Inventory Item With SKU code " + sku + " does not exist!");
+        }
+        inventoryRepository.deleteById(sku);
         ResponseEntity.ok().build();
     }
 
