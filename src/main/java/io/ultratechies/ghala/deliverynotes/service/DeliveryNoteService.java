@@ -22,11 +22,13 @@ public class DeliveryNoteService {
     }
 
     public Optional<DeliveryNote> getDeliveryNoteById(Long deliveyNoteId){
-        return deliveryNoteRepository.findById(deliveyNoteId);
+        return Optional.ofNullable(deliveryNoteRepository.findById(deliveyNoteId)
+                .orElseThrow(() -> new IllegalArgumentException("Note with Requested Id does not exist!")));
     }
 
     public ResponseEntity changeNoteStatusToDispatched(DeliveryNote deliveryNote){
         deliveryNote.setStatus("DISPATCHED");
+        deliveryNoteRepository.save(deliveryNote);
         return ResponseEntity.ok().build();
     }
 
