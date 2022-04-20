@@ -6,8 +6,10 @@ import io.ultratechies.ghala.warehouse.domain.UpdateWarehouseDTO;
 import io.ultratechies.ghala.warehouse.domain.Warehouse;
 import io.ultratechies.ghala.warehouse.service.WarehouseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.json.JSONObject;
 
 import java.util.Optional;
 
@@ -30,7 +32,9 @@ public class WarehouseResource {
     @PostMapping()
     public ResponseEntity registerWarehouse(@RequestBody Warehouse warehouse){
         warehouseService.saveWarehouse(warehouse);
-        return ResponseEntity.ok().build();
+        JSONObject addMessage= new JSONObject();
+        addMessage.put("message","Warehouse added successfully!");
+        return ResponseEntity.status(HttpStatus.OK).body(addMessage.toString());
     }
 
     @ApiOperation("Delete Warehouse by Id")
