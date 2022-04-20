@@ -85,6 +85,13 @@ public class OrderService {
             order.setValue(updateOrderDTO.getValue());
             order.setStatus("UPDATED");
         }
+        order.setValue(0);
+        order.getItems()
+                .forEach(item ->{   Inventory inventoryItem=inventoryRepository.findBySku(item.getSku());
+                    item.setName(inventoryItem.getName());
+                    item.setPpu(inventoryItem.getPpu());
+                    item.setTotalPrice(item.getPpu()*item.getQuantity());
+                    order.setValue(order.getValue()+item.getTotalPrice());});
         orderRepository.save(order);
         return ResponseEntity.ok().build();
     }
