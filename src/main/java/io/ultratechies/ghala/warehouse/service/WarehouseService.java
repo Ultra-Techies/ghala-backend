@@ -25,7 +25,7 @@ public class WarehouseService {
     }
 
     public Optional<Warehouse> getWarehouseById(Long id){
-        return warehouseRepository.findById(id);
+        return warehouseRepository.findWarehouseById(id);
     }
 
     public ResponseEntity saveWarehouse(Warehouse warehouse){

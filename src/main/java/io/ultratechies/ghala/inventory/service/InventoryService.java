@@ -65,6 +65,7 @@ public class InventoryService {
                 !Objects.equals(inventoryItem.getStatus(),updateInventoryDTO.getStatus())) {
             inventoryItem.setStatus(updateInventoryDTO.getStatus());
         }
+        inventoryRepository.save(inventoryItem);
 
         ResponseEntity.ok().build();
     }

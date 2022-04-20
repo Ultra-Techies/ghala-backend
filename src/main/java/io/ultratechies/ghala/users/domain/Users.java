@@ -30,6 +30,5 @@ public class Users {
     private String phoneNumber;
     private String assignedWarehouse;
     private String password;
-    @ManyToMany
-    private List<Roles> roles;
+    private String role;
 }

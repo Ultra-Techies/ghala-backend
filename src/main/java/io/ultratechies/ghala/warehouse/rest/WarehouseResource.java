@@ -13,7 +13,8 @@ import java.util.Optional;
 
 @CrossOrigin
 @RequiredArgsConstructor
-@RestController("/warehouse")
+@RestController
+@RequestMapping("/api/warehouse")
 public class WarehouseResource {
     private final WarehouseService warehouseService;
 
