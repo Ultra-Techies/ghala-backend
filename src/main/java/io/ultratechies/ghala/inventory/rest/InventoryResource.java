@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -20,11 +20,11 @@ public class InventoryResource {
     @Autowired
     private final InventoryService inventoryService;
 
-    @ApiOperation("Get All Inventory by Warehouse")
-    @GetMapping("/{warehouseId}")
-    public List<Inventory> getInventoryByWarehouse(@ApiParam(name="id", required = true,example = "1")
-                                                   @PathVariable Long warehouseId){
-        return inventoryService.getInventoryByWarehouse(warehouseId);
+    @ApiOperation("Get Inventory item by Id")
+    @GetMapping("/{itemId}")
+    public Optional<Inventory> getInventoryById(@ApiParam(name="id", required = true,example = "1")
+                                                   @PathVariable Long itemId){
+        return inventoryService.getInventoryItemBySku(itemId);
     }
 
     @ApiOperation("Create Inventory Item")
