@@ -52,7 +52,6 @@ public class UserService {
             user.setPhoneNumber(updateUserDTO.getPhoneNumber());
         }
         if (updateUserDTO.getAssignedWarehouse() != null &&
-                updateUserDTO.getAssignedWarehouse().length() > 0 &&
                 !Objects.equals(user.getAssignedWarehouse(),updateUserDTO.getAssignedWarehouse())) {
             user.setAssignedWarehouse(updateUserDTO.getAssignedWarehouse());
         }

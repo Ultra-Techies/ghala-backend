@@ -2,6 +2,7 @@ package io.ultratechies.ghala.users.domain;
 
 import io.ultratechies.ghala.roles.domain.Roles;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -28,7 +29,13 @@ public class Users {
     private Long id;
     private String email;
     private String phoneNumber;
-    private String assignedWarehouse;
+    private Integer assignedWarehouse;
     private String password;
     private String role;
+    private String firstName;
+    private String lastName;
+    @Lob
+    @Type(type = "org.hibernate.type.BinaryType")
+    private byte[] profilePhoto;
+
 }
