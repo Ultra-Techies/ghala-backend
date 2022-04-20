@@ -25,7 +25,8 @@ public class WarehouseService {
     }
 
     public Optional<Warehouse> getWarehouseById(Long id){
-        return warehouseRepository.findWarehouseById(id);
+        return Optional.ofNullable(warehouseRepository.findWarehouseById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Warehouse with provided Id does not exist!")));
     }
 
     public ResponseEntity saveWarehouse(Warehouse warehouse){
