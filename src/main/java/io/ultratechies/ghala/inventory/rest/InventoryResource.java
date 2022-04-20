@@ -38,7 +38,7 @@ public class InventoryResource {
     @DeleteMapping("/{sku}")
     public ResponseEntity deleteInventoryItem(@ApiParam(name="id", required = true,example = "1")
                                               @PathVariable Long sku){
-        inventoryService.deleteInventoryItem(inventoryService.getInventoryItemBySku(sku));
+        inventoryService.deleteInventoryItem(sku);
         return ResponseEntity.ok().build();
     }
 
