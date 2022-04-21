@@ -29,9 +29,8 @@ public class InventoryResource {
 
     @ApiOperation("Create Inventory Item")
     @PostMapping
-    public ResponseEntity createInventoryItem(@RequestBody Inventory inventoryItem){
-        inventoryService.createInventoryItem(inventoryItem);
-        return ResponseEntity.ok().build();
+    public Long createInventoryItem(@RequestBody Inventory inventoryItem){
+        return inventoryService.createInventoryItem(inventoryItem);
     }
 
     @ApiOperation("Delete Inventory Item")

@@ -27,9 +27,8 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public ResponseEntity saveUser(Users user){
-        userRepository.save(user);
-        return ResponseEntity.ok().build();
+    public Long saveUser(Users user){
+        return userRepository.save(user).getId();
     }
 
     public ResponseEntity deleteUser(Long id){

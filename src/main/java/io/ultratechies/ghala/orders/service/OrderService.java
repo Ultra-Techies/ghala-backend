@@ -34,7 +34,7 @@ public class OrderService {
         return orderRepository.findById(orderId);
     }
 
-    public ResponseEntity createOrder(Orders order){
+    public Long createOrder(Orders order){
         order.setValue(0);
         order.getItems()
                 .forEach(item ->{   Inventory inventoryItem=inventoryRepository.findBySku(item.getSku());
@@ -44,8 +44,7 @@ public class OrderService {
                                     order.setValue(order.getValue()+item.getTotalPrice());});
         order.setStatus("CREATED");
         order.setCreated(LocalDateTime.now());
-        orderRepository.save(order);
-        return ResponseEntity.ok().build();
+        return orderRepository.save(order).getId();
     }
     public ResponseEntity deleteOrder(Long orderId){
         orderRepository.deleteById(orderId);

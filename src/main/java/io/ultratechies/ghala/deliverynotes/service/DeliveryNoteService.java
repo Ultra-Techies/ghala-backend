@@ -15,10 +15,9 @@ public class DeliveryNoteService {
     @Autowired
     private final DeliveryNoteRepository deliveryNoteRepository;
 
-    public ResponseEntity createDeliveryNote(DeliveryNote deliveryNote){
+    public Long createDeliveryNote(DeliveryNote deliveryNote){
         deliveryNote.setStatus("CREATED");
-        deliveryNoteRepository.save(deliveryNote);
-        return ResponseEntity.ok().build();
+        return deliveryNoteRepository.save(deliveryNote).getId();
     }
 
     public Optional<DeliveryNote> getDeliveryNoteById(Long deliveyNoteId){
