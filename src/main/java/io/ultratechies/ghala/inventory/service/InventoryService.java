@@ -32,6 +32,7 @@ public class InventoryService {
     }
 
     public Long createInventoryItem(Inventory item){
+        item.setStatus("AVAILABLE");
         return inventoryRepository.save(item).getSku();
     }
 
