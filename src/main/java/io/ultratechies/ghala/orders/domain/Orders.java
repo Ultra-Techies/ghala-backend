@@ -2,6 +2,7 @@ package io.ultratechies.ghala.orders.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.vladmihalcea.hibernate.type.json.JsonType;
+import io.ultratechies.ghala.enums.OrderStatus;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -43,7 +44,8 @@ public class Orders {
     private String deliveryWindow;
     private String customerId;
     private Integer value;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
     @Type(type = "json")
     @Column(columnDefinition = "json")
     private List<OrderItemDTO> items;
