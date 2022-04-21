@@ -29,9 +29,8 @@ public class OrderController {
 
     @ApiOperation("Create Order")
     @PostMapping
-    public ResponseEntity createOrder(@RequestBody Orders order){
-        orderService.createOrder(order);
-        return ResponseEntity.ok().build();
+    public Long createOrder(@RequestBody Orders order){
+        return orderService.createOrder(order);
     }
 
     @ApiOperation("Delete Order")

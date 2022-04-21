@@ -29,9 +29,8 @@ public class WarehouseService {
                 .orElseThrow(() -> new IllegalArgumentException("Warehouse with provided Id does not exist!")));
     }
 
-    public ResponseEntity saveWarehouse(Warehouse warehouse){
-        warehouseRepository.save(warehouse);
-        return ResponseEntity.ok().build();
+    public Long saveWarehouse(Warehouse warehouse){
+        return warehouseRepository.save(warehouse).getId();
     }
 
     public ResponseEntity deleteWarehouse(Long id){

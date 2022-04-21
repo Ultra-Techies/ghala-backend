@@ -31,9 +31,9 @@ public class InventoryService {
                 .orElseThrow(() -> new IllegalStateException("Inventory Item With SKU code " + sku + " does not exist!")));
     }
 
-    public void createInventoryItem(Inventory item){
-        inventoryRepository.save(item);
-        ResponseEntity.ok().build();
+    public Long createInventoryItem(Inventory item){
+        item.setStatus("AVAILABLE");
+        return inventoryRepository.save(item).getSku();
     }
 
     public void deleteInventoryItem(Long sku){

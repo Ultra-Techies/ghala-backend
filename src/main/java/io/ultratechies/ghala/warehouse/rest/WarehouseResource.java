@@ -28,9 +28,8 @@ public class WarehouseResource {
 
     @ApiOperation("Register a New Warehouse")
     @PostMapping()
-    public ResponseEntity registerWarehouse(@RequestBody Warehouse warehouse){
-        warehouseService.saveWarehouse(warehouse);
-        return ResponseEntity.ok().build();
+    public Long registerWarehouse(@RequestBody Warehouse warehouse){
+        return warehouseService.saveWarehouse(warehouse);
     }
 
     @ApiOperation("Delete Warehouse by Id")

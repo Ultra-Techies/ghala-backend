@@ -26,9 +26,8 @@ public class UserResource {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> registerUser(@RequestBody Users user){
-        userService.saveUser(user);
-        return ResponseEntity.ok().build();
+    public Long registerUser(@RequestBody Users user){
+        return userService.saveUser(user);
     }
 
     @DeleteMapping("/{userId}")

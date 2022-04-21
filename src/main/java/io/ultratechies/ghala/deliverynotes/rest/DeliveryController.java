@@ -6,7 +6,6 @@ import io.ultratechies.ghala.deliverynotes.domain.DeliveryNote;
 import io.ultratechies.ghala.deliverynotes.service.DeliveryNoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -28,9 +27,8 @@ public class DeliveryController {
 
     @ApiOperation("Create Delivery Note")
     @PostMapping
-    public ResponseEntity createDeliveryNote(DeliveryNote deliveryNote){
-        deliveryNoteService.createDeliveryNote(deliveryNote);
-        return ResponseEntity.ok().build();
+    public Long createDeliveryNote(DeliveryNote deliveryNote){
+        return deliveryNoteService.createDeliveryNote(deliveryNote);
     }
 
 }
