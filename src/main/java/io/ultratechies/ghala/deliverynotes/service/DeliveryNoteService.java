@@ -2,6 +2,8 @@ package io.ultratechies.ghala.deliverynotes.service;
 
 import io.ultratechies.ghala.deliverynotes.domain.DeliveryNote;
 import io.ultratechies.ghala.deliverynotes.repository.DeliveryNoteRepository;
+import io.ultratechies.ghala.enums.DeliveryNoteStatus;
+import io.ultratechies.ghala.enums.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,7 @@ public class DeliveryNoteService {
     private final DeliveryNoteRepository deliveryNoteRepository;
 
     public Long createDeliveryNote(DeliveryNote deliveryNote){
-        deliveryNote.setStatus("CREATED");
+        deliveryNote.setStatus(DeliveryNoteStatus.PENDING);
         return deliveryNoteRepository.save(deliveryNote).getId();
     }
 
@@ -26,16 +28,16 @@ public class DeliveryNoteService {
     }
 
     public ResponseEntity changeNoteStatusToDispatched(DeliveryNote deliveryNote){
-        deliveryNote.setStatus("DISPATCHED");
+        deliveryNote.setStatus(DeliveryNoteStatus.DISPATCHED);
         deliveryNoteRepository.save(deliveryNote);
         return ResponseEntity.ok().build();
     }
 
     public ResponseEntity changeNoteStatusToDelivered(DeliveryNote deliveryNote){
-        deliveryNote.setStatus("DELIVERED");
+        deliveryNote.setStatus(DeliveryNoteStatus.DELIVERED);
         deliveryNote.getOrders()
                 .forEach(order ->{
-                    order.setStatus("DELIVERED");
+                    order.setStatus(OrderStatus.DELIVERED);
                 });
         deliveryNoteRepository.save(deliveryNote);
         return ResponseEntity.ok().build();

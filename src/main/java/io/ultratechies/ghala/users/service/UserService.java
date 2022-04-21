@@ -1,5 +1,6 @@
 package io.ultratechies.ghala.users.service;
 
+import io.ultratechies.ghala.enums.RolesEnum;
 import io.ultratechies.ghala.users.domain.UpdateUserDTO;
 import io.ultratechies.ghala.users.domain.Users;
 import io.ultratechies.ghala.users.repository.UserRepository;
@@ -32,6 +33,7 @@ public class UserService {
         if (userByEmail.isPresent()){
             throw  new IllegalStateException("User with email exists!");
         }
+        user.setRole(RolesEnum.BASIC);
         return userRepository.save(user).getId();
     }
 

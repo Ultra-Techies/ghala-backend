@@ -1,5 +1,6 @@
 package io.ultratechies.ghala.deliverynotes.domain;
 
+import io.ultratechies.ghala.enums.DeliveryNoteStatus;
 import io.ultratechies.ghala.orders.domain.Orders;
 import lombok.*;
 
@@ -26,7 +27,8 @@ public class DeliveryNote {
     private String Route;
     @OneToMany
     private List<Orders> orders;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private DeliveryNoteStatus status;
     private String deliveryWindow;
     private Long warehouseId;
 }
