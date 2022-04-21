@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -31,6 +32,7 @@ public class OrderService {
     }
 
     public Optional<Orders> getOrderById(Long orderId){
+
         return orderRepository.findById(orderId);
     }
 
@@ -43,7 +45,8 @@ public class OrderService {
                                     item.setTotalPrice(item.getPpu()*item.getQuantity());
                                     order.setValue(order.getValue()+item.getTotalPrice());});
         order.setStatus("CREATED");
-        order.setCreated(LocalDateTime.now());
+        order.setCreatedDate(LocalDateTime.now());
+        order.setCreatedTime(LocalDateTime.now());
         return orderRepository.save(order).getId();
     }
     public ResponseEntity deleteOrder(Long orderId){

@@ -1,5 +1,6 @@
 package io.ultratechies.ghala.orders.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.vladmihalcea.hibernate.type.json.JsonType;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -33,7 +34,11 @@ public class Orders {
             generator="users_sequence"
     )
     private Long id;
-    private LocalDateTime created;
+    @JsonFormat(pattern="dd-MM-yyyy")
+    private LocalDateTime createdDate;
+    @JsonFormat(pattern="HH:mm:ss")
+    private LocalDateTime createdTime;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date due;
     private String deliveryWindow;
     private String customerId;
