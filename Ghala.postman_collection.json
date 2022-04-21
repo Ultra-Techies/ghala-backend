@@ -445,7 +445,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/inventory/7",
+							"raw": "http://localhost:8080/api/inventory/14",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -454,7 +454,7 @@
 							"path": [
 								"api",
 								"inventory",
-								"7"
+								"14"
 							]
 						}
 					},
@@ -467,7 +467,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Coke\",\r\n    \"category\":\"Beverages\",\r\n    \"quantity\":\"1000\",\r\n    \"ppu\":\"2340\",\r\n    \"status\":\"AVAILABLE\",\r\n    \"warehouseId\":\"5\",\r\n    \"image\":[45,56,78,56,45]\r\n}",
+							"raw": "{\r\n    \"name\":\"Coke\",\r\n    \"category\":\"Beverages\",\r\n    \"quantity\":\"1000\",\r\n    \"ppu\":\"2340\",\r\n    \"warehouseId\":\"5\",\r\n    \"image\":[45,56,78,56,45]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
