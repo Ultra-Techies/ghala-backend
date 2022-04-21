@@ -1,5 +1,6 @@
 package io.ultratechies.ghala.users.domain;
 
+import io.ultratechies.ghala.enums.RolesEnum;
 import io.ultratechies.ghala.roles.domain.Roles;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -31,7 +32,8 @@ public class Users {
     private String phoneNumber;
     private Integer assignedWarehouse;
     private String password;
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private RolesEnum role;
     private String firstName;
     private String lastName;
     @Lob
