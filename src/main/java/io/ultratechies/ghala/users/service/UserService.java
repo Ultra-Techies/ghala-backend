@@ -69,6 +69,21 @@ public class UserService {
                 !Objects.equals(user.getPassword(),updateUserDTO.getPassword())) {
             user.setPassword(updateUserDTO.getPassword());
         }
+        if (updateUserDTO.getFirstName() != null &&
+                updateUserDTO.getFirstName().length() > 0 &&
+                !Objects.equals(user.getFirstName(),updateUserDTO.getFirstName())) {
+            user.setFirstName(updateUserDTO.getFirstName());
+        }
+        if (updateUserDTO.getLastName() != null &&
+                updateUserDTO.getLastName().length() > 0 &&
+                !Objects.equals(user.getLastName(),updateUserDTO.getLastName())) {
+            user.setLastName(updateUserDTO.getLastName());
+        }
+        if (updateUserDTO.getProfilePhoto() != null &&
+                updateUserDTO.getProfilePhoto().length > 0 &&
+                !Objects.equals(user.getProfilePhoto(),updateUserDTO.getProfilePhoto())) {
+            user.setProfilePhoto(updateUserDTO.getProfilePhoto());
+        }
 
     }
 
