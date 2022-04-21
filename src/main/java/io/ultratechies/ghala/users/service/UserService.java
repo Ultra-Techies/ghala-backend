@@ -28,6 +28,10 @@ public class UserService {
     }
 
     public Long saveUser(Users user){
+        Optional<Users> userByEmail=userRepository.findUsersByEmail(user.getEmail());
+        if (userByEmail.isPresent()){
+            throw  new IllegalStateException("User with email exists!");
+        }
         return userRepository.save(user).getId();
     }
 
@@ -43,6 +47,10 @@ public class UserService {
         if (updateUserDTO.getEmail() != null &&
                 updateUserDTO.getEmail().length() > 0 &&
                 !Objects.equals(user.getEmail(),updateUserDTO.getEmail())) {
+            Optional<Users> userByEmail=userRepository.findUsersByEmail(updateUserDTO.getEmail());
+            if (userByEmail.isPresent()){
+                throw  new IllegalStateException("User with email exists!");
+            }
             user.setEmail(updateUserDTO.getEmail());
             }
         if (updateUserDTO.getPhoneNumber() != null &&
