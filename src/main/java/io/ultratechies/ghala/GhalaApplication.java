@@ -4,6 +4,7 @@ import com.twilio.Twilio;
 import io.ultratechies.ghala.config.SwaggerConfiguration;
 import io.ultratechies.ghala.config.TwilioConfiguration;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -22,11 +23,12 @@ import javax.annotation.PostConstruct;
 @RequiredArgsConstructor
 public class GhalaApplication {
 
+	@Autowired
 	private final TwilioConfiguration twilioConfiguration;
 
 	@PostConstruct
 	public void innitTwilio(){
-		Twilio.init(twilioConfiguration.getAccountSid(),twilioConfiguration.getAuthToken());
+		Twilio.init(twilioConfiguration.getTwilioAccountSid(),twilioConfiguration.getTwilioAuthToken());
 	}
 
 	public static void main(String[] args) {
