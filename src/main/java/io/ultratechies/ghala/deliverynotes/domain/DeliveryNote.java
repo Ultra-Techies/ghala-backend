@@ -31,4 +31,5 @@ public class DeliveryNote {
     private DeliveryNoteStatus status;
     private String deliveryWindow;
     private Long warehouseId;
+    private String noteCode;
 }

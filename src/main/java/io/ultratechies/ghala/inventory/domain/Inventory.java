@@ -29,6 +29,7 @@ public class Inventory {
     private Integer quantity;
     private Integer ppu;
     private String status;
+    private String skuCode;
     private Long warehouseId;
     @Lob
     @Type(type = "org.hibernate.type.BinaryType")

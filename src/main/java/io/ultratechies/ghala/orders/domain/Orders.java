@@ -43,6 +43,7 @@ public class Orders {
     private Date due;
     private String deliveryWindow;
     private String customerId;
+    private String orderCode;
     private Integer value;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;

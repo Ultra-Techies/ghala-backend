@@ -11,11 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +40,7 @@ public class OrderService {
         return orderRepository.findById(orderId);
     }
 
+    @Transactional
     public Long createOrder(Orders order){
         order.setValue(0);
         order.getItems()
@@ -48,7 +52,9 @@ public class OrderService {
         order.setStatus(OrderStatus.SUBMITTED);
         order.setCreatedDate(LocalDateTime.now());
         order.setCreatedTime(LocalDateTime.now());
-        return orderRepository.save(order).getId();
+        Orders newOrder =orderRepository.save(order);
+        newOrder.setOrderCode("GH"+ randomNo()+"OS"+newOrder.getId());
+        return newOrder.getId();
     }
     public ResponseEntity deleteOrder(Long orderId){
         orderRepository.deleteById(orderId);
@@ -97,5 +103,10 @@ public class OrderService {
                     order.setValue(order.getValue()+item.getTotalPrice());});
         orderRepository.save(order);
         return ResponseEntity.ok().build();
+    }
+
+    private String randomNo() {
+        return new DecimalFormat("00")
+                .format(new Random().nextInt(99));
     }
 }

@@ -8,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -31,9 +34,13 @@ public class InventoryService {
                 .orElseThrow(() -> new IllegalStateException("Inventory Item With SKU code " + sku + " does not exist!")));
     }
 
+    @Transactional
     public Long createInventoryItem(Inventory item){
         item.setStatus("AVAILABLE");
-        return inventoryRepository.save(item).getSku();
+        Inventory newItem=inventoryRepository.save(item);
+        newItem.setSkuCode("GH"+ randomNo()+"OS"+newItem.getSku());
+        inventoryRepository.save(newItem);
+        return newItem.getSku();
     }
 
     public void deleteInventoryItem(Long sku){
@@ -74,5 +81,10 @@ public class InventoryService {
         inventoryRepository.save(inventoryItem);
 
         ResponseEntity.ok().build();
+    }
+
+    private String randomNo() {
+        return new DecimalFormat("00")
+                .format(new Random().nextInt(99));
     }
 }

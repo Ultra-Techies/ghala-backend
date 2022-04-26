@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.text.DecimalFormat;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -17,9 +20,13 @@ public class DeliveryNoteService {
     @Autowired
     private final DeliveryNoteRepository deliveryNoteRepository;
 
+    @Transactional
     public Long createDeliveryNote(DeliveryNote deliveryNote){
         deliveryNote.setStatus(DeliveryNoteStatus.PENDING);
-        return deliveryNoteRepository.save(deliveryNote).getId();
+        DeliveryNote note =deliveryNoteRepository.save(deliveryNote);
+        note.setNoteCode("GH"+ randomNo()+"DN"+note.getId());
+        deliveryNoteRepository.save(note);
+        return note.getId();
     }
 
     public Optional<DeliveryNote> getDeliveryNoteById(Long deliveyNoteId){
@@ -41,5 +48,10 @@ public class DeliveryNoteService {
                 });
         deliveryNoteRepository.save(deliveryNote);
         return ResponseEntity.ok().build();
+    }
+
+    private String randomNo() {
+        return new DecimalFormat("00")
+                .format(new Random().nextInt(99));
     }
 }
