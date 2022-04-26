@@ -31,7 +31,7 @@ public class SMSService {
                             otpMessage)
                     .create();
             otpMap.put(otpRequestDTO.getEmail(), otp);
-        return ResponseEntity.ok(otpMap);
+        return ResponseEntity.ok(Integer.parseInt(otp));
     }
 
     //4 digit otp
