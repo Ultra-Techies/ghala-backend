@@ -561,6 +561,39 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "OTP",
+			"item": []
+		},
+		{
+			"name": "Request OTP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"iannjari@gmail.com\",\r\n    \"phoneNumber\":\"=+254748849247\",\r\n    \"name\":\"Ian\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/otp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"otp"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
