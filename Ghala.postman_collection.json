@@ -51,7 +51,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"idhf\",\r\n    \"phoneNumber\":\"7980\",\r\n    \"assignedWarehouse\":\"juja\",\r\n    \"password\":\"jkf\",\r\n    \"role\":\"ADMIN\"\r\n}",
+							"raw": "{\r\n    \"email\":\"idhgt@com\",\r\n    \"phoneNumber\":\"7980\",\r\n    \"assignedWarehouse\":3,\r\n    \"password\":\"jkf\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"profilePhoto\": [23,34,56,78,78]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -121,7 +121,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":\"1\",\r\n    \"email\":\"ihf\",\r\n    \"phoneNumber\":\"780\",\r\n    \"assignedWarehouse\":\"jja\",\r\n    \"password\":\"jkfgf\",\r\n    \"role\":\"ADMIN2\"\r\n}",
+							"raw": "{\r\n        \"id\": 1,\r\n        \"email\": \"idhgtio@jk.com\",\r\n        \"phoneNumber\": \"7980\",\r\n        \"assignedWarehouse\": 3,\r\n        \"password\": \"jkf\",\r\n        \"role\": \"BASIC\",\r\n        \"firstName\": \"John\",\r\n        \"lastName\": \"Doe\",\r\n        \"profilePhoto\": [23,45,67,67,89,90]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -321,7 +321,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"due\":\"2022-04-29\",\r\n    \"deliveryWindow\":\"MORNING\",\r\n    \"customerId\":\"3RT\",\r\n    \"items\":[{\r\n        \"sku\":6,\r\n        \"quantity\":3\r\n    }, {\r\n        \"sku\":6,\r\n        \"quantity\":3\r\n    }],\r\n    \"route\":\"route1\",\r\n    \"warehouseId\":\"3\"\r\n}",
+							"raw": "{\r\n    \"due\":\"2022-04-29\",\r\n    \"deliveryWindow\":\"MORNING\",\r\n    \"customerId\":\"3RT\",\r\n    \"items\":[{\r\n        \"sku\":16,\r\n        \"quantity\":3\r\n    }, {\r\n        \"sku\":15,\r\n        \"quantity\":30\r\n    }],\r\n    \"route\":\"route1\",\r\n    \"warehouseId\":\"3\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -561,6 +561,39 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "OTP",
+			"item": []
+		},
+		{
+			"name": "Request OTP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"iannjari@gmail.com\",\r\n    \"phoneNumber\":\"=+254748849247\",\r\n    \"name\":\"Ian\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/otp",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"otp"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
