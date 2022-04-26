@@ -1,5 +1,5 @@
 package io.ultratechies.ghala.enums;
 
 public enum DeliveryNoteStatus {
-    PENDING,DISPATCHED,DELIVERED
+    PENDING,PROCESSING,DISPATCHED,DELIVERED
 }
