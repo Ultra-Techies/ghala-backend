@@ -33,7 +33,12 @@ public class UserService {
         if (userByEmail.isPresent()){
             throw  new IllegalStateException("User with email exists!");
         }
+        Boolean firstUser=userRepository.findAll().isEmpty();
+        if (firstUser){
+            user.setRole(RolesEnum.ADMIN);
+        }else {
         user.setRole(RolesEnum.BASIC);
+            }
         return userRepository.save(user).getId();
     }
 
