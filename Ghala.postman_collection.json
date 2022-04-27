@@ -321,7 +321,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"due\":\"2022-04-29\",\r\n    \"deliveryWindow\":\"MORNING\",\r\n    \"customerId\":\"3RT\",\r\n    \"items\":[{\r\n        \"sku\":16,\r\n        \"quantity\":3\r\n    }, {\r\n        \"sku\":15,\r\n        \"quantity\":30\r\n    }],\r\n    \"route\":\"route1\",\r\n    \"warehouseId\":\"3\"\r\n}",
+							"raw": "{\r\n    \"due\":\"2022-04-29\",\r\n    \"deliveryWindow\":\"MORNING\",\r\n    \"customerId\":\"3RT\",\r\n    \"items\":[{\r\n        \"sku\":1,\r\n        \"quantity\":3\r\n    }, {\r\n        \"sku\":2,\r\n        \"quantity\":30\r\n    }],\r\n    \"route\":\"route1\",\r\n    \"warehouseId\":\"3\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -564,36 +564,112 @@
 		},
 		{
 			"name": "OTP",
-			"item": []
+			"item": [
+				{
+					"name": "Get OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"ian@g.com\",\r\n    \"name\":\"Ian\",\r\n    \"phoneNumber\":\"+254714099358\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/otp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"otp"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
-			"name": "Request OTP",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"iannjari@gmail.com\",\r\n    \"phoneNumber\":\"=+254748849247\",\r\n    \"name\":\"Ian\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "DeliveryNotes",
+			"item": [
+				{
+					"name": "Get Delivery Note by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/deliveryNote/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"deliveryNote",
+								"9"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8080/api/otp",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"otp"
-					]
+				{
+					"name": "Create Delivery Note",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"route\":\"A1\",\r\n    \"orderIds\":[3,4],\r\n    \"deliverWindow\":\"MORNING\",\r\n    \"warehouseId\":4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/deliveryNote",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"deliveryNote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch all Notes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/allnotes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"allnotes"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }
