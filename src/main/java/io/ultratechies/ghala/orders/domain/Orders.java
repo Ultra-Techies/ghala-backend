@@ -9,7 +9,6 @@ import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +43,7 @@ public class Orders {
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date due;
     private String deliveryWindow;
-    private String customerId;
+    private String customerName;
     private String orderCode;
     private Integer value;
     @Enumerated(EnumType.STRING)
