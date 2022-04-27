@@ -10,9 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +26,7 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public Long saveUser(Users user){
+    public Map<String,String> saveUser(Users user){
         Optional<Users> userByEmail=userRepository.findUsersByEmail(user.getEmail());
         if (userByEmail.isPresent()){
             throw  new IllegalStateException("User with email exists!");
@@ -39,7 +37,10 @@ public class UserService {
         }else {
         user.setRole(RolesEnum.BASIC);
             }
-        return userRepository.save(user).getId();
+        Users newUser=userRepository.save(user);
+        Map map = new HashMap<>();
+        map.put("id",newUser.getId());
+        return map;
     }
 
     public ResponseEntity deleteUser(Long id){

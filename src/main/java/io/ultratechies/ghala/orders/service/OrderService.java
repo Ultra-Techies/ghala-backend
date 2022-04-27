@@ -13,12 +13,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Random;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +38,7 @@ public class OrderService {
     }
 
     @Transactional
-    public Long createOrder(Orders order){
+    public Map createOrder(Orders order){
         order.setValue(0);
         order.getItems()
                 .forEach(item ->{   Inventory inventoryItem=inventoryRepository.findBySku(item.getSku());
@@ -50,11 +47,13 @@ public class OrderService {
                                     item.setTotalPrice(item.getPpu()*item.getQuantity());
                                     order.setValue(order.getValue()+item.getTotalPrice());});
         order.setStatus(OrderStatus.SUBMITTED);
-        order.setCreatedDate(LocalDateTime.now());
-        order.setCreatedTime(LocalDateTime.now());
+        order.setCreatedDate(LocalDate.now());
+        order.setCreatedTime(LocalTime.now());
         Orders newOrder =orderRepository.save(order);
         newOrder.setOrderCode("GH"+ randomNo()+"OS"+newOrder.getId());
-        return newOrder.getId();
+        Map map = new HashMap<>();
+        map.put("id", newOrder.getId());
+        return map;
     }
     public ResponseEntity deleteOrder(Long orderId){
         orderRepository.deleteById(orderId);

@@ -3,6 +3,7 @@ package io.ultratechies.ghala.deliverynotes.domain;
 import io.ultratechies.ghala.enums.DeliveryNoteStatus;
 import io.ultratechies.ghala.orders.domain.Orders;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,8 +25,9 @@ public class DeliveryNote {
             generator="users_sequence"
     )
     private Long id;
-    private String Route;
-    @OneToMany
+    private String route;
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
     private List<Orders> orders;
     @Enumerated(EnumType.STRING)
     private DeliveryNoteStatus status;

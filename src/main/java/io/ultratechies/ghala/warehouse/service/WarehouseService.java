@@ -9,9 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -29,8 +27,11 @@ public class WarehouseService {
                 .orElseThrow(() -> new IllegalArgumentException("Warehouse with provided Id does not exist!")));
     }
 
-    public Long saveWarehouse(Warehouse warehouse){
-        return warehouseRepository.save(warehouse).getId();
+    public Map saveWarehouse(Warehouse warehouse){
+        Warehouse newWarehouse=warehouseRepository.save(warehouse);
+        Map map = new HashMap<>();
+        map.put("id",newWarehouse.getId());
+        return map;
     }
 
     public ResponseEntity deleteWarehouse(Long id){

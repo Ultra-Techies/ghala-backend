@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -35,12 +32,14 @@ public class InventoryService {
     }
 
     @Transactional
-    public Long createInventoryItem(Inventory item){
+    public Map createInventoryItem(Inventory item){
         item.setStatus("AVAILABLE");
         Inventory newItem=inventoryRepository.save(item);
         newItem.setSkuCode("GH"+ randomNo()+"OS"+newItem.getSku());
         inventoryRepository.save(newItem);
-        return newItem.getSku();
+        Map map = new HashMap<>();
+        map.put("sku", newItem.getSku());
+        return map;
     }
 
     public void deleteInventoryItem(Long sku){

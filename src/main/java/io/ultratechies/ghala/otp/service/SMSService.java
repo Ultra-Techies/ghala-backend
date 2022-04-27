@@ -30,8 +30,8 @@ public class SMSService {
                     .creator(to, from,
                             otpMessage)
                     .create();
-            otpMap.put(otpRequestDTO.getEmail(), otp);
-        return ResponseEntity.ok(Integer.parseInt(otp));
+            otpMap.put("otp", otp);
+        return ResponseEntity.ok(otpMap);
     }
 
     //4 digit otp

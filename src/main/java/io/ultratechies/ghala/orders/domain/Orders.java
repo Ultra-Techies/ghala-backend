@@ -8,7 +8,9 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -36,9 +38,9 @@ public class Orders {
     )
     private Long id;
     @JsonFormat(pattern="dd-MM-yyyy")
-    private LocalDateTime createdDate;
+    private LocalDate createdDate;
     @JsonFormat(pattern="HH:mm:ss")
-    private LocalDateTime createdTime;
+    private LocalTime createdTime;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date due;
     private String deliveryWindow;

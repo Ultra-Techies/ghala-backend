@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin
@@ -28,7 +29,7 @@ public class WarehouseResource {
 
     @ApiOperation("Register a New Warehouse")
     @PostMapping()
-    public Long registerWarehouse(@RequestBody Warehouse warehouse){
+    public Map registerWarehouse(@RequestBody Warehouse warehouse){
         return warehouseService.saveWarehouse(warehouse);
     }
 

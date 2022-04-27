@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -26,7 +27,7 @@ public class UserResource {
     }
 
     @PostMapping()
-    public Long registerUser(@RequestBody Users user){
+    public Map registerUser(@RequestBody Users user){
         return userService.saveUser(user);
     }
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin
@@ -29,7 +30,7 @@ public class InventoryResource {
 
     @ApiOperation("Create Inventory Item")
     @PostMapping
-    public Long createInventoryItem(@RequestBody Inventory inventoryItem){
+    public Map createInventoryItem(@RequestBody Inventory inventoryItem){
         return inventoryService.createInventoryItem(inventoryItem);
     }
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin
@@ -29,7 +30,7 @@ public class OrderController {
 
     @ApiOperation("Create Order")
     @PostMapping
-    public Long createOrder(@RequestBody Orders order){
+    public Map createOrder(@RequestBody Orders order){
         return orderService.createOrder(order);
     }
 
