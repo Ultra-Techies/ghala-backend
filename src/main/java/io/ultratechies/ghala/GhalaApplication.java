@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -21,6 +22,7 @@ import javax.annotation.PostConstruct;
 @Import(SwaggerConfiguration.class)
 @ComponentScan("io.ultratechies.ghala")
 @RequiredArgsConstructor
+@EnableScheduling
 public class GhalaApplication {
 
 	@Autowired
