@@ -10,10 +10,16 @@ import io.ultratechies.ghala.orders.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.text.DecimalFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Service
@@ -29,6 +35,7 @@ public class DeliveryNoteService {
         List<Orders> ordersList=orderRepository.findAllById(createNoteDTO.getOrderIds());
         note.setStatus(DeliveryNoteStatus.PENDING);
         note.setRoute(createNoteDTO.getRoute());
+        note.setCreatedTime(LocalTime.now());
         note.setOrders(ordersList);
         DeliveryNote savedNote=deliveryNoteRepository.save(note);
         savedNote.setNoteCode("GH"+ randomNo()+"DN"+savedNote.getId());
@@ -53,18 +60,47 @@ public class DeliveryNoteService {
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity changeNoteStatusToDelivered(DeliveryNote deliveryNote){
-        deliveryNote.setStatus(DeliveryNoteStatus.DELIVERED);
-        deliveryNote.getOrders()
-                .forEach(order ->{
-                    order.setStatus(OrderStatus.DELIVERED);
-                });
-        deliveryNoteRepository.save(deliveryNote);
-        return ResponseEntity.ok().build();
-    }
-
     private String randomNo() {
         return new DecimalFormat("00")
                 .format(new Random().nextInt(99));
+    }
+
+    public DeliveryNote changeStatusToProcessing(Long noteId){
+        DeliveryNote note=deliveryNoteRepository.findById(noteId).get();
+        note.setStatus(DeliveryNoteStatus.PROCESSING);
+        note.getOrders().stream()
+                .forEach(order -> { order.setStatus(OrderStatus.PROCESSING);
+                                    orderRepository.save(order);});
+        deliveryNoteRepository.save(note);
+        return note;
+    }
+
+    public DeliveryNote changeStatusToDispatched(Long noteId){
+        DeliveryNote note=deliveryNoteRepository.findById(noteId).get();
+        note.setStatus(DeliveryNoteStatus.DISPATCHED);
+        note.getOrders().stream()
+                .forEach(order -> { order.setStatus(OrderStatus.DISPATCHED);
+                    orderRepository.save(order);});
+        deliveryNoteRepository.save(note);
+        return note;
+    }
+
+    @Scheduled(fixedRate =1000)
+    public void mockDelivery(){
+        List<DeliveryNote> notes = deliveryNoteRepository.findAll();
+        notes.forEach(note -> {
+            if(ChronoUnit.MINUTES.between(note.getCreatedTime(),LocalDateTime.now()) >60){
+            changeStatusToCompleted(note.getId());}
+        });
+    }
+
+    private void changeStatusToCompleted(Long noteId){
+        DeliveryNote note=deliveryNoteRepository.findById(noteId).get();
+        note.setStatus(DeliveryNoteStatus.COMPLETED);
+        note.getOrders().stream()
+                .forEach(order -> {
+                    order.setStatus(OrderStatus.DELIVERED);
+                    orderRepository.save(order);});
+        deliveryNoteRepository.save(note);
     }
 }
