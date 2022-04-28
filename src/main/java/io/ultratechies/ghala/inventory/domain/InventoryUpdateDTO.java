@@ -17,7 +17,6 @@ public class InventoryUpdateDTO {
     private String category;
     private Integer quantity;
     private Integer ppu;
-    private String status;
     @Lob
     @Type(type = "org.hibernate.type.BinaryType")
     private byte[] image;

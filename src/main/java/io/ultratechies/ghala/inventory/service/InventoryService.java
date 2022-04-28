@@ -72,11 +72,11 @@ public class InventoryService {
             inventoryItem.setPpu(updateInventoryDTO.getPpu());
         }
 
-        if (updateInventoryDTO.getStatus() != null &&
+        /*if (updateInventoryDTO.getStatus() != null &&
                 updateInventoryDTO.getStatus().length() > 0 &&
                 !Objects.equals(inventoryItem.getStatus(),updateInventoryDTO.getStatus())) {
             inventoryItem.setStatus(updateInventoryDTO.getStatus());
-        }
+        }*/
         inventoryRepository.save(inventoryItem);
 
         ResponseEntity.ok().build();
