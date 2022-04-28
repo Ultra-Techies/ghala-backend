@@ -31,6 +31,10 @@ public class UserService {
         if (userByEmail.isPresent()){
             throw  new IllegalStateException("User with email exists!");
         }
+        Optional<Users> userByPhone=userRepository.findUsersByPhoneNumber(user.getPhoneNumber());
+        if (userByPhone.isPresent()){
+            throw new IllegalStateException("User with Phone Number exists!");
+        }
         Boolean firstUser=userRepository.findAll().isEmpty();
         if (firstUser){
             user.setRole(RolesEnum.ADMIN);
@@ -46,6 +50,14 @@ public class UserService {
     public ResponseEntity deleteUser(Long id){
         userRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    public Map userExists(Users phoneNumber){
+        Optional<Users> userByPhone=userRepository.findUsersByPhoneNumber(phoneNumber.getPhoneNumber());
+        Boolean exists=userByPhone.isPresent();
+        Map map = new HashMap<>();
+        map.put("exists",exists);
+        return map;
     }
 
     @Transactional
