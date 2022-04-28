@@ -26,9 +26,15 @@ public class UsersResource {
         return ResponseEntity.ok(users);
     }
 
-    @ApiOperation("Check whether user exists!")
+    @ApiOperation("Check whether user exists")
     @PostMapping
-    public Map userExists(@RequestBody Users userNo){
-        return userService.userExists(userNo);
+    public Map userExists(@RequestBody Users user){
+        return userService.userExists(user);
+    }
+
+    @ApiOperation("Verify user")
+    @PutMapping
+    public Map verifyUser(@RequestBody Users user){
+        return userService.verifyUser(user);
     }
 }

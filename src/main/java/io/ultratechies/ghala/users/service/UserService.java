@@ -52,11 +52,24 @@ public class UserService {
         return ResponseEntity.ok().build();
     }
 
-    public Map userExists(Users phoneNumber){
-        Optional<Users> userByPhone=userRepository.findUsersByPhoneNumber(phoneNumber.getPhoneNumber());
+    public Map userExists(Users user){
+        Optional<Users> userByPhone=userRepository.findUsersByPhoneNumber(user.getPhoneNumber());
         Boolean exists=userByPhone.isPresent();
         Map map = new HashMap<>();
         map.put("exists",exists);
+        return map;
+    }
+
+    public Map verifyUser(Users user){
+        Optional<Users> userByPhone=userRepository.findUsersByPhoneNumber(user.getPhoneNumber());
+        Boolean exists=userByPhone.isPresent();
+        if(!exists){
+            throw new IllegalArgumentException("User with Phone Number does not exist!");
+        }
+        Users userByNo=userRepository.findUsersByPhoneNumber(user.getPhoneNumber()).get();
+        Boolean matches=Objects.equals(user.getPassword(),userByNo.getPassword());
+        Map map = new HashMap<>();
+        map.put("verified",matches);
         return map;
     }
 
