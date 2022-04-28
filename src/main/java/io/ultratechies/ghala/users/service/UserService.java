@@ -60,7 +60,7 @@ public class UserService {
         return map;
     }
 
-    public Map verifyUser(Users user){
+    public ResponseEntity verifyUser(Users user){
         Optional<Users> userByPhone=userRepository.findUsersByPhoneNumber(user.getPhoneNumber());
         Boolean exists=userByPhone.isPresent();
         if(!exists){
@@ -70,7 +70,11 @@ public class UserService {
         Boolean matches=Objects.equals(user.getPassword(),userByNo.getPassword());
         Map map = new HashMap<>();
         map.put("verified",matches);
-        return map;
+        if (matches){
+            return ResponseEntity.ok(userByNo);
+        }else {
+           return ResponseEntity.ok(map);
+        }
     }
 
     @Transactional

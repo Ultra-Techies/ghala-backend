@@ -34,7 +34,7 @@ public class UsersResource {
 
     @ApiOperation("Verify user")
     @PutMapping
-    public Map verifyUser(@RequestBody Users user){
+    public ResponseEntity verifyUser(@RequestBody Users user){
         return userService.verifyUser(user);
     }
 }
