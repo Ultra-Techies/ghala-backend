@@ -37,6 +37,8 @@ public class DeliveryNoteService {
         note.setRoute(createNoteDTO.getRoute());
         note.setCreatedTime(LocalTime.now());
         note.setOrders(ordersList);
+        note.setDeliveryWindow(createNoteDTO.getDeliveryWindow());
+        note.setWarehouseId(createNoteDTO.getWarehouseId());
         DeliveryNote savedNote=deliveryNoteRepository.save(note);
         savedNote.setNoteCode("GH"+ randomNo()+"DN"+savedNote.getId());
         DeliveryNote s=deliveryNoteRepository.save(savedNote);
@@ -54,11 +56,6 @@ public class DeliveryNoteService {
         return deliveryNoteRepository.findAll();
     }
 
-    public ResponseEntity changeNoteStatusToDispatched(DeliveryNote deliveryNote){
-        deliveryNote.setStatus(DeliveryNoteStatus.DISPATCHED);
-        deliveryNoteRepository.save(deliveryNote);
-        return ResponseEntity.ok().build();
-    }
 
     private String randomNo() {
         return new DecimalFormat("00")
