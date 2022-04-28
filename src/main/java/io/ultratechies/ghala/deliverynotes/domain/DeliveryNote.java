@@ -1,11 +1,15 @@
 package io.ultratechies.ghala.deliverynotes.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.ultratechies.ghala.enums.DeliveryNoteStatus;
 import io.ultratechies.ghala.orders.domain.Orders;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.print.attribute.standard.DateTimeAtCreation;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Getter
@@ -34,4 +38,6 @@ public class DeliveryNote {
     private String deliveryWindow;
     private Long warehouseId;
     private String noteCode;
+    @JsonFormat(pattern="HH:mm:ss")
+    private LocalTime createdTime;
 }
