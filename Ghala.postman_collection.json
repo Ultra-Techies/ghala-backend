@@ -51,7 +51,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"idhgt@com\",\r\n    \"phoneNumber\":\"7980\",\r\n    \"assignedWarehouse\":3,\r\n    \"password\":\"jkf\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"profilePhoto\": [23,34,56,78,78]\r\n}",
+							"raw": "{\r\n    \"email\":\"idhggt@com\",\r\n    \"phoneNumber\":\"07980\",\r\n    \"assignedWarehouse\":3,\r\n    \"password\":\"jkf\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"profilePhoto\": [23,34,56,78,78]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -138,6 +138,64 @@
 							"path": [
 								"api",
 								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check if User Exists",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phoneNumber\":\"+254784744903\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phoneNumber\":\"07980\",\r\n    \"password\":\"4000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users"
 							]
 						}
 					},
@@ -321,7 +379,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"due\":\"2022-04-29\",\r\n    \"deliveryWindow\":\"MORNING\",\r\n    \"customerId\":\"3RT\",\r\n    \"items\":[{\r\n        \"sku\":1,\r\n        \"quantity\":3\r\n    }, {\r\n        \"sku\":2,\r\n        \"quantity\":30\r\n    }],\r\n    \"route\":\"route1\",\r\n    \"warehouseId\":\"3\"\r\n}",
+							"raw": "{\r\n    \"due\":\"2022-04-29\",\r\n    \"deliveryWindow\":\"MORNING\",\r\n    \"customerName\":\"3RT\",\r\n    \"items\":[{\r\n        \"sku\":1,\r\n        \"quantity\":3\r\n    }, {\r\n        \"sku\":2,\r\n        \"quantity\":30\r\n    }],\r\n    \"route\":\"route1\",\r\n    \"warehouseId\":\"3\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -349,7 +407,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/order/14",
+							"raw": "http://localhost:8080/api/order/18",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -358,7 +416,7 @@
 							"path": [
 								"api",
 								"order",
-								"14"
+								"18"
 							]
 						}
 					},
@@ -517,7 +575,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"sku\":6,\r\n    \"name\":\"Kasuku 10\",\r\n    \"category\":\"Cooking Oill\",\r\n    \"quantity\":\"10000\",\r\n    \"ppu\":\"230\",\r\n    \"status\":\"AVAILABLEE\",\r\n    \"warehouseId\":\"5\"\r\n}",
+							"raw": "{\r\n    \"sku\":2,\r\n    \"name\":\"Kasuku 20L\",\r\n    \"category\":\"Cooking Oill\",\r\n    \"quantity\":\"10000\",\r\n    \"ppu\":\"230\",\r\n    \"warehouseId\":\"5\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -605,7 +663,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/deliveryNote/9",
+							"raw": "http://localhost:8080/api/deliveryNote/14",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -614,7 +672,7 @@
 							"path": [
 								"api",
 								"deliveryNote",
-								"9"
+								"14"
 							]
 						}
 					},
@@ -664,6 +722,37 @@
 							"path": [
 								"api",
 								"allnotes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Note Status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/deliveryNote/15/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"deliveryNote",
+								"15",
+								"1"
 							]
 						}
 					},

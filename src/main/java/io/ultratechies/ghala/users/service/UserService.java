@@ -31,6 +31,10 @@ public class UserService {
         if (userByEmail.isPresent()){
             throw  new IllegalStateException("User with email exists!");
         }
+        Optional<Users> userByPhone=userRepository.findUsersByPhoneNumber(user.getPhoneNumber());
+        if (userByPhone.isPresent()){
+            throw new IllegalStateException("User with Phone Number exists!");
+        }
         Boolean firstUser=userRepository.findAll().isEmpty();
         if (firstUser){
             user.setRole(RolesEnum.ADMIN);
@@ -46,6 +50,31 @@ public class UserService {
     public ResponseEntity deleteUser(Long id){
         userRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    public Map userExists(Users user){
+        Optional<Users> userByPhone=userRepository.findUsersByPhoneNumber(user.getPhoneNumber());
+        Boolean exists=userByPhone.isPresent();
+        Map map = new HashMap<>();
+        map.put("exists",exists);
+        return map;
+    }
+
+    public ResponseEntity verifyUser(Users user){
+        Optional<Users> userByPhone=userRepository.findUsersByPhoneNumber(user.getPhoneNumber());
+        Boolean exists=userByPhone.isPresent();
+        if(!exists){
+            throw new IllegalArgumentException("User with Phone Number does not exist!");
+        }
+        Users userByNo=userRepository.findUsersByPhoneNumber(user.getPhoneNumber()).get();
+        Boolean matches=Objects.equals(user.getPassword(),userByNo.getPassword());
+        Map map = new HashMap<>();
+        map.put("verified",matches);
+        if (matches){
+            return ResponseEntity.ok(userByNo);
+        }else {
+           return ResponseEntity.ok(map);
+        }
     }
 
     @Transactional

@@ -33,4 +33,14 @@ public class DeliveryController {
         return deliveryNoteService.createDeliveryNote(createNoteDTO);
     }
 
+    @ApiOperation("Change Note Status")
+    @PutMapping("/{noteId}/{operation}")
+    public DeliveryNote changeNoteStatus(@PathVariable  Long noteId, @PathVariable Integer operation){
+        if (operation == 1){
+            return deliveryNoteService.changeStatusToDispatched(noteId);
+        }else if (operation==0){
+            return deliveryNoteService.changeStatusToProcessing(noteId);
+        }else throw new IllegalArgumentException("Unknown operation"+operation);
+    }
+
 }
