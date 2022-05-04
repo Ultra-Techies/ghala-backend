@@ -3,6 +3,7 @@ import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Lob;
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -15,7 +16,5 @@ public class UpdateUserDTO {
     private String password;
     private String firstName;
     private String lastName;
-    @Lob
-    @Type(type = "org.hibernate.type.BinaryType")
-    private byte[] profilePhoto;
+    private ArrayList<Integer> profilePhoto;
 }

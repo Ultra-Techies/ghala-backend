@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,8 +37,6 @@ public class Users {
     private RolesEnum role;
     private String firstName;
     private String lastName;
-    @Lob
-    @Type(type = "org.hibernate.type.BinaryType")
-    private byte[] profilePhoto;
+    private ArrayList<Integer> profilePhoto;
 
 }
