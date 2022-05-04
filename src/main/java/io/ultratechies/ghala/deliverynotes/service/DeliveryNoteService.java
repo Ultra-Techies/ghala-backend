@@ -5,6 +5,8 @@ import io.ultratechies.ghala.deliverynotes.domain.DeliveryNote;
 import io.ultratechies.ghala.deliverynotes.repository.DeliveryNoteRepository;
 import io.ultratechies.ghala.enums.DeliveryNoteStatus;
 import io.ultratechies.ghala.enums.OrderStatus;
+import io.ultratechies.ghala.inventory.domain.Inventory;
+import io.ultratechies.ghala.inventory.repository.InventoryRepository;
 import io.ultratechies.ghala.orders.domain.Orders;
 import io.ultratechies.ghala.orders.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,7 @@ public class DeliveryNoteService {
     @Autowired
     private final DeliveryNoteRepository deliveryNoteRepository;
     private final OrderRepository orderRepository;
+    private final InventoryRepository inventoryRepository;
 
     @Transactional
     public Map createDeliveryNote(CreateNoteDTO createNoteDTO){
@@ -39,6 +42,9 @@ public class DeliveryNoteService {
         note.setOrders(ordersList);
         note.setDeliveryWindow(createNoteDTO.getDeliveryWindow());
         note.setWarehouseId(createNoteDTO.getWarehouseId());
+        note.getOrders().stream()
+                .forEach(order -> { order.setStatus(OrderStatus.PENDING);
+                    orderRepository.save(order);});
         DeliveryNote savedNote=deliveryNoteRepository.save(note);
         savedNote.setNoteCode("GH"+ randomNo()+"DN"+savedNote.getId());
         DeliveryNote s=deliveryNoteRepository.save(savedNote);
@@ -77,6 +83,11 @@ public class DeliveryNoteService {
         note.setStatus(DeliveryNoteStatus.DISPATCHED);
         note.getOrders().stream()
                 .forEach(order -> { order.setStatus(OrderStatus.DISPATCHED);
+                                    order.getItems().forEach(item -> {
+                                        Inventory inventoryItem = inventoryRepository.findBySku(item.getSku());
+                                        inventoryItem.setQuantity(inventoryItem.getQuantity()- item.getQuantity());
+                                        inventoryRepository.save(inventoryItem);
+                                    });
                     orderRepository.save(order);});
         deliveryNoteRepository.save(note);
         return note;
