@@ -34,7 +34,10 @@ public class OrderService {
 
     public Optional<Orders> getOrderById(Long orderId){
 
-        return orderRepository.findById(orderId);
+
+        Orders order = orderRepository.findById(orderId)
+                .orElseThrow(()-> new IllegalArgumentException("Order with Id "+orderId+" does not exist!"));
+        return Optional.of(order);
     }
 
     @Transactional

@@ -23,7 +23,10 @@ public class UserService {
 
     }
     public Optional<Users> getUserById(Long id){
-        return userRepository.findById(id);
+
+       Users user=userRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("User with Id "+id +" does not exist!"));
+       return Optional.ofNullable(user);
     }
 
     public Map<String,String> saveUser(Users user){
