@@ -115,7 +115,6 @@ public class UserService {
             user.setLastName(updateUserDTO.getLastName());
         }
         if (updateUserDTO.getProfilePhoto() != null &&
-                updateUserDTO.getProfilePhoto().length > 0 &&
                 !Objects.equals(user.getProfilePhoto(),updateUserDTO.getProfilePhoto())) {
             user.setProfilePhoto(updateUserDTO.getProfilePhoto());
         }
