@@ -3,6 +3,7 @@ package io.ultratechies.ghala.inventory.service;
 import io.ultratechies.ghala.inventory.domain.Inventory;
 import io.ultratechies.ghala.inventory.domain.InventoryUpdateDTO;
 import io.ultratechies.ghala.inventory.repository.InventoryRepository;
+import io.ultratechies.ghala.warehouse.repository.WarehouseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.*;
 public class InventoryService {
     @Autowired
     private final InventoryRepository inventoryRepository;
+    private final WarehouseRepository warehouseRepository;
 
     public List<Inventory> getAllInventory(){
         return inventoryRepository.findAll();
@@ -34,6 +36,9 @@ public class InventoryService {
     @Transactional
     public Map createInventoryItem(Inventory item){
         item.setStatus("AVAILABLE");
+        warehouseRepository.findById(item.getWarehouseId())
+                .orElseThrow(()->new IllegalArgumentException("Warehouse with Id: "+ item.getWarehouseId()
+                        +" Does not exist!"));
         Inventory newItem=inventoryRepository.save(item);
         newItem.setSkuCode("GH"+ randomNo()+"OS"+newItem.getSku());
         inventoryRepository.save(newItem);

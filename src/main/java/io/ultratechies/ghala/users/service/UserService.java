@@ -4,6 +4,7 @@ import io.ultratechies.ghala.enums.RolesEnum;
 import io.ultratechies.ghala.users.domain.UpdateUserDTO;
 import io.ultratechies.ghala.users.domain.Users;
 import io.ultratechies.ghala.users.repository.UserRepository;
+import io.ultratechies.ghala.warehouse.repository.WarehouseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.*;
 public class UserService {
     @Autowired
     private final UserRepository userRepository;
+    private final WarehouseRepository warehouseRepository;
 
     public List<Users> getAllUsers(){
         return userRepository.findAll();
@@ -44,6 +46,8 @@ public class UserService {
         }else {
         user.setRole(RolesEnum.BASIC);
             }
+        warehouseRepository.findById(user.getAssignedWarehouse().longValue())
+                .orElseThrow(()->new IllegalStateException("Warehouse with Id: "+ user.getAssignedWarehouse() +" Does not exist!"));
         Users newUser=userRepository.save(user);
         Map map = new HashMap<>();
         map.put("id",newUser.getId());
