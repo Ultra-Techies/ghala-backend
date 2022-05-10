@@ -9,6 +9,7 @@ import io.ultratechies.ghala.inventory.domain.Inventory;
 import io.ultratechies.ghala.inventory.repository.InventoryRepository;
 import io.ultratechies.ghala.orders.domain.Orders;
 import io.ultratechies.ghala.orders.repository.OrderRepository;
+import io.ultratechies.ghala.warehouse.repository.WarehouseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +32,13 @@ public class DeliveryNoteService {
     private final DeliveryNoteRepository deliveryNoteRepository;
     private final OrderRepository orderRepository;
     private final InventoryRepository inventoryRepository;
+    private final WarehouseRepository warehouseRepository;
 
     @Transactional
     public Map createDeliveryNote(CreateNoteDTO createNoteDTO){
+        warehouseRepository.findById(createNoteDTO.getWarehouseId())
+                .orElseThrow(()->new IllegalStateException("Warehouse with Id: "+ createNoteDTO.getWarehouseId()
+                        +" Does not exist!"));
         DeliveryNote note= new DeliveryNote();
         List<Orders> ordersList=orderRepository.findAllById(createNoteDTO.getOrderIds());
         note.setStatus(DeliveryNoteStatus.PENDING);
@@ -43,7 +48,13 @@ public class DeliveryNoteService {
         note.setDeliveryWindow(createNoteDTO.getDeliveryWindow());
         note.setWarehouseId(createNoteDTO.getWarehouseId());
         note.getOrders().stream()
-                .forEach(order -> { order.setStatus(OrderStatus.PENDING);
+                .forEach(order -> {
+                    if (! order.getWarehouseId().equals(createNoteDTO.getWarehouseId())){
+                        throw new IllegalArgumentException("Order with Code: "+ order.getOrderCode()
+                                +" does not belong to WH with Id: "+ createNoteDTO.getWarehouseId()
+                                +". Order's WH Id:"+ order.getWarehouseId());
+                    }
+                    order.setStatus(OrderStatus.PENDING);
                     orderRepository.save(order);});
         DeliveryNote savedNote=deliveryNoteRepository.save(note);
         savedNote.setNoteCode("GH"+ randomNo()+"DN"+savedNote.getId());
