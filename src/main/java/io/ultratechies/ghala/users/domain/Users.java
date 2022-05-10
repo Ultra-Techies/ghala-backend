@@ -1,9 +1,12 @@
 package io.ultratechies.ghala.users.domain;
 
+import io.ultratechies.ghala.enums.RolesEnum;
 import io.ultratechies.ghala.roles.domain.Roles;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,8 +31,12 @@ public class Users {
     private Long id;
     private String email;
     private String phoneNumber;
-    private String assignedWarehouse;
+    private Integer assignedWarehouse;
     private String password;
-    @ManyToMany
-    private List<Roles> roles;
+    @Enumerated(EnumType.STRING)
+    private RolesEnum role;
+    private String firstName;
+    private String lastName;
+    private ArrayList<Integer> profilePhoto;
+
 }

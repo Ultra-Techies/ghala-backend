@@ -1,12 +1,15 @@
 package io.ultratechies.ghala.orders.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.vladmihalcea.hibernate.type.json.JsonType;
+import io.ultratechies.ghala.enums.OrderStatus;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -33,12 +36,18 @@ public class Orders {
             generator="users_sequence"
     )
     private Long id;
-    private LocalDateTime created;
+    @JsonFormat(pattern="dd-MM-yyyy")
+    private LocalDate createdDate;
+    @JsonFormat(pattern="HH:mm:ss")
+    private LocalTime createdTime;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date due;
     private String deliveryWindow;
-    private String customerId;
+    private String customerName;
+    private String orderCode;
     private Integer value;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
     @Type(type = "json")
     @Column(columnDefinition = "json")
     private List<OrderItemDTO> items;

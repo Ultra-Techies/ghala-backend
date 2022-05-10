@@ -12,7 +12,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/allinventory")
+@RequestMapping("/api/allinventory")
 public class AllInventoryResource {
     @Autowired
     private final InventoryService inventoryService;

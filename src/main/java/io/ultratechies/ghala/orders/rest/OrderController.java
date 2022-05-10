@@ -1,6 +1,7 @@
 package io.ultratechies.ghala.orders.rest;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.ultratechies.ghala.orders.domain.Orders;
 import io.ultratechies.ghala.orders.domain.UpdateOrderDTO;
 import io.ultratechies.ghala.orders.service.OrderService;
@@ -9,32 +10,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/order")
+@RequestMapping("/api/order")
 public class OrderController {
     @Autowired
     private final OrderService orderService;
 
     @ApiOperation("Get Order By Id")
-    @GetMapping("{orderId}")
-    public Optional<Orders> getOrderById(@PathVariable Long orderId){
+    @GetMapping("/{orderId}")
+    public Optional<Orders> getOrderById(@ApiParam(value="id", required = true,example = "1")
+                                         @PathVariable Long orderId){
         return orderService.getOrderById(orderId);
     }
 
     @ApiOperation("Create Order")
     @PostMapping
-    public ResponseEntity createOrder(@RequestBody Orders order){
-        orderService.createOrder(order);
-        return ResponseEntity.ok().build();
+    public Map createOrder(@RequestBody Orders order){
+        return orderService.createOrder(order);
     }
 
     @ApiOperation("Delete Order")
-    @DeleteMapping("{orderId}")
-    public ResponseEntity deleteOrder(@PathVariable Long orderId){
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity deleteOrder(@ApiParam(name="id", required = true,example = "1")
+                                      @PathVariable Long orderId){
         orderService.deleteOrder(orderId);
         return ResponseEntity.ok().build();
     }

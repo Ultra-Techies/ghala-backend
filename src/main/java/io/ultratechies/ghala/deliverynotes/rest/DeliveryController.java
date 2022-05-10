@@ -1,34 +1,46 @@
 package io.ultratechies.ghala.deliverynotes.rest;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.ultratechies.ghala.deliverynotes.domain.CreateNoteDTO;
 import io.ultratechies.ghala.deliverynotes.domain.DeliveryNote;
 import io.ultratechies.ghala.deliverynotes.service.DeliveryNoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/deliveryNote")
+@RequestMapping("/api/deliveryNote")
 public class DeliveryController {
     @Autowired
     private final DeliveryNoteService deliveryNoteService;
 
     @ApiOperation("Fetch a Delivery Note")
-    @GetMapping("{deliveryNoteId}")
-    public Optional<DeliveryNote> getDeliveryNote(Long deliveryNoteId){
+    @GetMapping("/{deliveryNoteId}")
+    public Optional<DeliveryNote> getDeliveryNote(@ApiParam(name="delivery note id", required = true,example = "1")
+                                                  @PathVariable Long deliveryNoteId){
         return deliveryNoteService.getDeliveryNoteById(deliveryNoteId);
     }
 
     @ApiOperation("Create Delivery Note")
     @PostMapping
-    public ResponseEntity createDeliveryNote(DeliveryNote deliveryNote){
-        deliveryNoteService.createDeliveryNote(deliveryNote);
-        return ResponseEntity.ok().build();
+    public Map createDeliveryNote(@RequestBody CreateNoteDTO createNoteDTO){
+        return deliveryNoteService.createDeliveryNote(createNoteDTO);
+    }
+
+    @ApiOperation("Change Note Status")
+    @PutMapping("/{noteId}/{operation}")
+    public DeliveryNote changeNoteStatus(@PathVariable  Long noteId, @PathVariable Integer operation){
+        if (operation == 1){
+            return deliveryNoteService.changeStatusToDispatched(noteId);
+        }else if (operation==0){
+            return deliveryNoteService.changeStatusToProcessing(noteId);
+        }else throw new IllegalArgumentException("Unknown operation"+operation);
     }
 
 }

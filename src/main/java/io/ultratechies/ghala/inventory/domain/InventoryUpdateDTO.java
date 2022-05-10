@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.Lob;
 
 @Getter
 @Setter
@@ -14,5 +17,7 @@ public class InventoryUpdateDTO {
     private String category;
     private Integer quantity;
     private Integer ppu;
-    private String status;
+    @Lob
+    @Type(type = "org.hibernate.type.BinaryType")
+    private byte[] image;
 }

@@ -6,17 +6,15 @@ import io.ultratechies.ghala.users.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UsersResource {
     @Autowired
     private final UserService userService;
@@ -26,5 +24,17 @@ public class UsersResource {
     public ResponseEntity<List<Users>> getAllUsers(){
         var users= userService.getAllUsers();
         return ResponseEntity.ok(users);
+    }
+
+    @ApiOperation("Check whether user exists")
+    @PostMapping
+    public Map userExists(@RequestBody Users user){
+        return userService.userExists(user);
+    }
+
+    @ApiOperation("Verify user")
+    @PutMapping
+    public ResponseEntity verifyUser(@RequestBody Users user){
+        return userService.verifyUser(user);
     }
 }

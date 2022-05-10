@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
+import javax.transaction.Transactional;
+import java.text.DecimalFormat;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -24,17 +25,28 @@ public class InventoryService {
         return inventoryRepository.findByWarehouseId(warehouseId);
     }
 
-    public Inventory getInventoryItemBySku(Long sku){
-        return inventoryRepository.findBySku(sku);
+    public Optional<Inventory> getInventoryItemBySku(Long sku){
+        //Inventory inventoryItem=inventoryRepository.findBySku(sku);
+        return Optional.ofNullable(Optional.ofNullable(inventoryRepository.findBySku(sku))
+                .orElseThrow(() -> new IllegalStateException("Inventory Item With SKU code " + sku + " does not exist!")));
     }
 
-    public void createInventoryItem(Inventory item){
-        inventoryRepository.save(item);
-        ResponseEntity.ok().build();
+    @Transactional
+    public Map createInventoryItem(Inventory item){
+        item.setStatus("AVAILABLE");
+        Inventory newItem=inventoryRepository.save(item);
+        newItem.setSkuCode("GH"+ randomNo()+"OS"+newItem.getSku());
+        inventoryRepository.save(newItem);
+        Map map = new HashMap<>();
+        map.put("sku", newItem.getSku());
+        return map;
     }
 
-    public void deleteInventoryItem(Inventory item){
-        inventoryRepository.delete(item);
+    public void deleteInventoryItem(Long sku){
+        if (!inventoryRepository.existsById(sku)){
+            throw new IllegalArgumentException("Inventory Item With SKU code " + sku + " does not exist!");
+        }
+        inventoryRepository.deleteById(sku);
         ResponseEntity.ok().build();
     }
 
@@ -60,12 +72,18 @@ public class InventoryService {
             inventoryItem.setPpu(updateInventoryDTO.getPpu());
         }
 
-        if (updateInventoryDTO.getStatus() != null &&
+        /*if (updateInventoryDTO.getStatus() != null &&
                 updateInventoryDTO.getStatus().length() > 0 &&
                 !Objects.equals(inventoryItem.getStatus(),updateInventoryDTO.getStatus())) {
             inventoryItem.setStatus(updateInventoryDTO.getStatus());
-        }
+        }*/
+        inventoryRepository.save(inventoryItem);
 
         ResponseEntity.ok().build();
+    }
+
+    private String randomNo() {
+        return new DecimalFormat("00")
+                .format(new Random().nextInt(99));
     }
 }

@@ -1,6 +1,7 @@
 package io.ultratechies.ghala.inventory.domain;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -28,5 +29,9 @@ public class Inventory {
     private Integer quantity;
     private Integer ppu;
     private String status;
+    private String skuCode;
     private Long warehouseId;
+    @Lob
+    @Type(type = "org.hibernate.type.BinaryType")
+    private byte[] image;
 }
