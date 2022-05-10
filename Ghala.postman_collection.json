@@ -14,7 +14,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/user/2",
+							"raw": "http://localhost:8080/api/user/222",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -23,7 +23,7 @@
 							"path": [
 								"api",
 								"user",
-								"2"
+								"222"
 							]
 						}
 					},
@@ -51,7 +51,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"idhggt@com\",\r\n    \"phoneNumber\":\"07980\",\r\n    \"assignedWarehouse\":3,\r\n    \"password\":\"jkf\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"profilePhoto\": [23,34,56,78,78]\r\n}",
+							"raw": "{\r\n    \"email\":\"idhfggfttgre@com\",\r\n    \"phoneNumber\":\"0756549580\",\r\n    \"assignedWarehouse\":3,\r\n    \"password\":\"jkf\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"profilePhoto\": [-23,-34,56,78,78]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -99,7 +99,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/user/1",
+							"raw": "http://localhost:8080/api/user/6",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -108,7 +108,7 @@
 							"path": [
 								"api",
 								"user",
-								"1"
+								"6"
 							]
 						}
 					},
@@ -407,7 +407,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/order/18",
+							"raw": "http://localhost:8080/api/order/180",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -416,7 +416,7 @@
 							"path": [
 								"api",
 								"order",
-								"18"
+								"180"
 							]
 						}
 					},
@@ -525,7 +525,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Coke\",\r\n    \"category\":\"Beverages\",\r\n    \"quantity\":\"1000\",\r\n    \"ppu\":\"2340\",\r\n    \"warehouseId\":\"5\",\r\n    \"image\":[45,56,78,56,45]\r\n}",
+							"raw": "{\r\n    \"name\":\"Pika\",\r\n    \"category\":\"Cooking Oil\",\r\n    \"quantity\":\"1000\",\r\n    \"ppu\":\"20\",\r\n    \"warehouseId\":\"3\",\r\n    \"image\":[45,56,78,56,45]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -603,7 +603,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/allWHinventory/5",
+							"raw": "http://localhost:8080/api/allWHinventory/31",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -612,7 +612,7 @@
 							"path": [
 								"api",
 								"allWHinventory",
-								"5"
+								"31"
 							]
 						}
 					},
@@ -630,7 +630,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"ian@g.com\",\r\n    \"name\":\"Ian\",\r\n    \"phoneNumber\":\"+254714099358\"\r\n}",
+							"raw": "{\r\n    \"email\":\"ian@g.com\",\r\n    \"name\":\"Ian\",\r\n    \"phoneNumber\":\"+254714099359\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -663,7 +663,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/deliveryNote/14",
+							"raw": "http://localhost:8080/api/deliveryNote/29",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -672,7 +672,7 @@
 							"path": [
 								"api",
 								"deliveryNote",
-								"14"
+								"29"
 							]
 						}
 					},
@@ -685,7 +685,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"route\":\"A1\",\r\n    \"orderIds\":[3,4],\r\n    \"deliverWindow\":\"MORNING\",\r\n    \"warehouseId\":4\r\n}",
+							"raw": "{\r\n    \"route\":\"A1\",\r\n    \"orderIds\":[3,4],\r\n    \"deliveryWindow\":\"MORNING\",\r\n    \"warehouseId\":4\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -742,7 +742,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/deliveryNote/15/1",
+							"raw": "http://localhost:8080/api/deliveryNote/14/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -751,8 +751,34 @@
 							"path": [
 								"api",
 								"deliveryNote",
-								"15",
+								"14",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stats",
+			"item": [
+				{
+					"name": "Request Stats By WH Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/stats/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"stats",
+								"3"
 							]
 						}
 					},
