@@ -9,14 +9,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/deliveryNote")
-public class DeliveryController {
+@RequestMapping("/api/deliverynotes")
+public class DeliveryNotesController {
     @Autowired
     private final DeliveryNoteService deliveryNoteService;
 
@@ -42,5 +43,11 @@ public class DeliveryController {
             return deliveryNoteService.changeStatusToProcessing(noteId);
         }else throw new IllegalArgumentException("Unknown operation"+operation);
     }
+    @GetMapping("/all")
+    public List<DeliveryNote> getAllNotes()
+    {
+        return deliveryNoteService.getAllNotes();
+    }
+
 
 }

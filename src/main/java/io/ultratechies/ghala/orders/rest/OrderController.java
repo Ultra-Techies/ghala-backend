@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -49,5 +50,17 @@ public class OrderController {
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation("Get All Orders by Warehouse ID")
+    @GetMapping("/wh/{warehouseId}")
+    public List<Orders> getOrdersByWarehouse(@ApiParam(name="id", required = true,example = "1")
+                                             @PathVariable Long warehouseId){
+        return orderService.getOrdersByWarehouse(warehouseId);
+    }
+
+    @ApiOperation("Get All Orders")
+    @GetMapping("/all")
+    public List<Orders> getAllOrders(){
+        return orderService.getAllOrders();
+    }
 
 }
