@@ -32,9 +32,9 @@ public class UsersResource {
         return userService.userExists(user);
     }
 
-    @ApiOperation("Verify user")
+    /*@ApiOperation("Verify user")
     @PutMapping
     public ResponseEntity verifyUser(@RequestBody Users user){
         return userService.verifyUser(user);
-    }
+    }*/
 }
