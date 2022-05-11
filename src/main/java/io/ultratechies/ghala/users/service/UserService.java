@@ -8,6 +8,11 @@ import io.ultratechies.ghala.warehouse.repository.WarehouseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,10 +20,11 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
     @Autowired
     private final UserRepository userRepository;
     private final WarehouseRepository warehouseRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public List<Users> getAllUsers(){
         return userRepository.findAll();
@@ -48,6 +54,7 @@ public class UserService {
             }
         warehouseRepository.findById(user.getAssignedWarehouse().longValue())
                 .orElseThrow(()->new IllegalStateException("Warehouse with Id: "+ user.getAssignedWarehouse() +" Does not exist!"));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         Users newUser=userRepository.save(user);
         Map map = new HashMap<>();
         map.put("id",newUser.getId());
@@ -67,21 +74,14 @@ public class UserService {
         return map;
     }
 
-    public ResponseEntity verifyUser(Users user){
+    public ResponseEntity fetchUserByPhoneNumber(Users user){
         Optional<Users> userByPhone=userRepository.findUsersByPhoneNumber(user.getPhoneNumber());
         Boolean exists=userByPhone.isPresent();
         if(!exists){
             throw new IllegalArgumentException("User with Phone Number does not exist!");
         }
-        Users userByNo=userRepository.findUsersByPhoneNumber(user.getPhoneNumber()).get();
-        Boolean matches=Objects.equals(user.getPassword(),userByNo.getPassword());
-        Map map = new HashMap<>();
-        map.put("verified",matches);
-        if (matches){
-            return ResponseEntity.ok(userByNo);
-        }else {
-           return ResponseEntity.ok(map);
-        }
+        return ResponseEntity.ok(userByPhone);
+
     }
 
     @Transactional
@@ -128,4 +128,12 @@ public class UserService {
 
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
+        Users user = userRepository.findUsersByPhoneNumber(phoneNumber).get();
+        Collection<SimpleGrantedAuthority> authorities =new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
+        return new org.springframework.security.core.userdetails.User(user.getPhoneNumber(),
+                user.getPassword(), authorities);
+    }
 }
