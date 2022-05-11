@@ -74,22 +74,15 @@ public class UserService implements UserDetailsService {
         return map;
     }
 
-    /*public ResponseEntity verifyUser(Users user){
+    public ResponseEntity fetchUserByPhoneNumber(Users user){
         Optional<Users> userByPhone=userRepository.findUsersByPhoneNumber(user.getPhoneNumber());
         Boolean exists=userByPhone.isPresent();
         if(!exists){
             throw new IllegalArgumentException("User with Phone Number does not exist!");
         }
-        Users userByNo=userRepository.findUsersByPhoneNumber(user.getPhoneNumber()).get();
-        Boolean matches=Objects.equals(user.getPassword(),userByNo.getPassword());
-        Map map = new HashMap<>();
-        map.put("verified",matches);
-        if (matches){
-            return ResponseEntity.ok(userByNo);
-        }else {
-           return ResponseEntity.ok(map);
-        }
-    }*/
+        return ResponseEntity.ok(userByPhone);
+
+    }
 
     @Transactional
     public void updateUser(UpdateUserDTO updateUserDTO){
