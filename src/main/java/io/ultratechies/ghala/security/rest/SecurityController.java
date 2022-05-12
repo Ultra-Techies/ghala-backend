@@ -50,7 +50,7 @@ public class SecurityController {
                 Users user = userRepository.findUsersByPhoneNumber(username).get();
                 String accessToken = JWT.create()
                         .withSubject(user.getPhoneNumber())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 1 * 60 * 1000))
+                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withClaim("role",user.getRole().toString())
                         .sign(algorithm);
 
