@@ -122,6 +122,10 @@ public class UserService implements UserDetailsService {
                 !Objects.equals(user.getLastName(),updateUserDTO.getLastName())) {
             user.setLastName(updateUserDTO.getLastName());
         }
+        if (updateUserDTO.getRole() != null &&
+                !Objects.equals(user.getRole(),updateUserDTO.getRole())) {
+            user.setRole(updateUserDTO.getRole());
+        }
         if (updateUserDTO.getProfilePhoto() != null &&
                 !Objects.equals(user.getProfilePhoto(),updateUserDTO.getProfilePhoto())) {
             user.setProfilePhoto(updateUserDTO.getProfilePhoto());
