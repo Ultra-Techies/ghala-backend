@@ -21,7 +21,7 @@ public class WarehouseResource {
     private final WarehouseService warehouseService;
 
     @ApiOperation("Fetch Warehouse Info by ID")
-    @GetMapping("/{warehouseId}")
+    @GetMapping("/get/{warehouseId}")
     public ResponseEntity<Optional<Warehouse>> getWarehouseById(@ApiParam(name="id", required = true,example = "1")
                                                                 @PathVariable Long warehouseId){
         var wh=warehouseService.getWarehouseById(warehouseId);
