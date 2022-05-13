@@ -110,7 +110,7 @@ public class UserService implements UserDetailsService {
         if (updateUserDTO.getPassword() != null &&
                 updateUserDTO.getPassword().length() > 0 &&
                 !Objects.equals(user.getPassword(),updateUserDTO.getPassword())) {
-            user.setPassword(updateUserDTO.getPassword());
+            user.setPassword(passwordEncoder.encode(updateUserDTO.getPassword()));
         }
         if (updateUserDTO.getFirstName() != null &&
                 updateUserDTO.getFirstName().length() > 0 &&
