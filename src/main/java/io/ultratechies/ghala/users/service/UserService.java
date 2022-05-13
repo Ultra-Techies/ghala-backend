@@ -2,6 +2,7 @@ package io.ultratechies.ghala.users.service;
 
 import io.ultratechies.ghala.enums.RolesEnum;
 import io.ultratechies.ghala.users.domain.UpdateUserDTO;
+import io.ultratechies.ghala.users.domain.UserResponseDTO;
 import io.ultratechies.ghala.users.domain.Users;
 import io.ultratechies.ghala.users.repository.UserRepository;
 import io.ultratechies.ghala.warehouse.repository.WarehouseRepository;
@@ -30,11 +31,14 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
 
     }
-    public Optional<Users> getUserById(Long id){
+    public ResponseEntity getUserById(Long id){
 
-       Users user=userRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("User with Id "+id +" does not exist!"));
-       return Optional.ofNullable(user);
+       Optional<Users> user=userRepository.findById(id);
+       Boolean exists=user.isPresent();
+        if(!exists){
+            throw new IllegalArgumentException("User with Id "+id +" does not exist!");
+        }
+        return ResponseEntity.ok(user.map(this::convertResponse));
     }
 
     public Map<String,String> saveUser(Users user){
@@ -81,7 +85,7 @@ public class UserService implements UserDetailsService {
         if(!exists){
             throw new IllegalArgumentException("User with Phone Number does not exist!");
         }
-        return ResponseEntity.ok(userByPhone);
+        return ResponseEntity.ok(userByPhone.map(this::convertResponse));
 
     }
 
@@ -132,5 +136,20 @@ public class UserService implements UserDetailsService {
         authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
         return new org.springframework.security.core.userdetails.User(user.getPhoneNumber(),
                 user.getPassword(), authorities);
+    }
+
+    private UserResponseDTO convertResponse(Users user){
+        UserResponseDTO userResponseDTO = new UserResponseDTO();
+        userResponseDTO.setId(user.getId());
+        userResponseDTO.setPhoneNumber(user.getPhoneNumber());
+        userResponseDTO.setAssignedWarehouse(user.getAssignedWarehouse());
+        userResponseDTO.setEmail(user.getEmail());
+        userResponseDTO.setFirstName(user.getFirstName());
+        userResponseDTO.setLastName(user.getLastName());
+        userResponseDTO.setRole(user.getRole());
+        userResponseDTO.setProfilePhoto(user.getProfilePhoto());
+
+        return userResponseDTO;
+
     }
 }
