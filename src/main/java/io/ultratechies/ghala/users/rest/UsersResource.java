@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @CrossOrigin
 @RequiredArgsConstructor
@@ -23,9 +22,9 @@ public class UsersResource {
     private final UserService userService;
 
     @GetMapping("/get/{userId}")
-    public Optional<Users> getUserById(@ApiParam(name="id", required = true,example = "1")
+    public ResponseEntity getUserById(@ApiParam(name="id", required = true,example = "1")
                                        @PathVariable Long userId){
-        Optional<Users> user=userService.getUserById(userId);
+        ResponseEntity user=userService.getUserById(userId);
         return user;
     }
 
