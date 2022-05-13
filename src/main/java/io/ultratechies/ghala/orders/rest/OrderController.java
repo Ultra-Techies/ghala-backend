@@ -23,7 +23,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @ApiOperation("Get Order By Id")
-    @GetMapping("/{orderId}")
+    @GetMapping("/get/{orderId}")
     public Optional<Orders> getOrderById(@ApiParam(value="id", required = true,example = "1")
                                          @PathVariable Long orderId){
         return orderService.getOrderById(orderId);

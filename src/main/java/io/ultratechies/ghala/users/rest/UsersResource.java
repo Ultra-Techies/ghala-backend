@@ -22,7 +22,7 @@ public class UsersResource {
     @Autowired
     private final UserService userService;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/get/{userId}")
     public Optional<Users> getUserById(@ApiParam(name="id", required = true,example = "1")
                                        @PathVariable Long userId){
         Optional<Users> user=userService.getUserById(userId);
