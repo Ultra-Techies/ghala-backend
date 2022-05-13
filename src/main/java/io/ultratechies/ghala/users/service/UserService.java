@@ -46,14 +46,15 @@ public class UserService implements UserDetailsService {
         if (userByPhone.isPresent()){
             throw new IllegalStateException("User with Phone Number exists!");
         }
+        if (user.getAssignedWarehouse()!=null){
+            throw new IllegalArgumentException("WH cannot be assigned at creation!");
+        }
         Boolean firstUser=userRepository.findAll().isEmpty();
         if (firstUser){
             user.setRole(RolesEnum.ADMIN);
         }else {
-        user.setRole(RolesEnum.BASIC);
+            user.setRole(RolesEnum.BASIC);
             }
-        warehouseRepository.findById(user.getAssignedWarehouse().longValue())
-                .orElseThrow(()->new IllegalStateException("Warehouse with Id: "+ user.getAssignedWarehouse() +" Does not exist!"));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Users newUser=userRepository.save(user);
         Map map = new HashMap<>();
