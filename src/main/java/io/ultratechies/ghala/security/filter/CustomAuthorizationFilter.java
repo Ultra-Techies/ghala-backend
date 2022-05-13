@@ -57,13 +57,14 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                 }catch (Exception e){
                     log.error(e.getClass().toString());
                     response.setHeader("Error",e.getMessage());
+                    Map<String, String> error = new HashMap<>();
                     if (e instanceof NestedServletException){
+                        error.put("error_message", ((NestedServletException) e).getRootCause().getMessage().toString());
                         response.setStatus(INTERNAL_SERVER_ERROR.value());
                     }else {
+                        error.put("error_message", e.getMessage());
                         response.setStatus(FORBIDDEN.value());
                     }
-                    Map<String, String> error = new HashMap<>();
-                    error.put("error_message", e.getMessage());
                     response.setContentType(APPLICATION_JSON_VALUE);
                     new ObjectMapper().writeValue(response.getOutputStream(), error);
                 }
