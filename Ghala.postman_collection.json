@@ -14,7 +14,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/users/22",
+							"raw": "http://localhost:8080/api/users/42",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -23,7 +23,7 @@
 							"path": [
 								"api",
 								"users",
-								"22"
+								"42"
 							]
 						}
 					},
@@ -33,25 +33,13 @@
 					"name": "Create User",
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "password",
-									"value": "49a2eb96-8182-43e4-af2e-da1a2bbb972d",
-									"type": "string"
-								},
-								{
-									"key": "username",
-									"value": "user",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"idhfggfttgre@com\",\r\n    \"phoneNumber\":\"0756549580\",\r\n    \"assignedWarehouse\":3,\r\n    \"password\":\"jkf\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"profilePhoto\": [-23,-34,56,78,78]\r\n}",
+							"raw": "{\r\n    \"email\":\"idhfggfttgre@com\",\r\n    \"phoneNumber\":\"0756549580\",\r\n    \"assignedWarehouse\":43,\r\n    \"password\":\"jkf\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"profilePhoto\": [-23,-34,56,78,78]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -97,10 +85,13 @@
 				{
 					"name": "Get User By Id",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/users/6",
+							"raw": "http://localhost:8080/api/users/get/6",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -109,6 +100,7 @@
 							"path": [
 								"api",
 								"users",
+								"get",
 								"6"
 							]
 						}
@@ -122,7 +114,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"id\": 1,\r\n        \"email\": \"idhgtio@jk.com\",\r\n        \"phoneNumber\": \"7980\",\r\n        \"assignedWarehouse\": 3,\r\n        \"password\": \"jkf\",\r\n        \"role\": \"BASIC\",\r\n        \"firstName\": \"John\",\r\n        \"lastName\": \"Doe\",\r\n        \"profilePhoto\": [23,45,67,67,89,90]\r\n}",
+							"raw": "{\r\n        \"id\": 42,\r\n        \"firstName\": \"Johny\",\r\n        \"lastName\": \"Doeooo\",\r\n        \"profilePhoto\": [23,45,67,675,89,90]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -176,7 +168,26 @@
 				},
 				{
 					"name": "Verify User/ Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let access_token = pm.response.headers.get(\"access_token\");\r",
+									"let refresh_token = pm.response.headers.get(\"refresh_token\");\r",
+									"console.log(access_token);\r",
+									"console.log(refresh_token);\r",
+									"pm.globals.set(\"access_token\",access_token);\r",
+									"pm.globals.set(\"refresh_token\",refresh_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -184,7 +195,7 @@
 							"urlencoded": [
 								{
 									"key": "phoneNumber",
-									"value": "0755459580",
+									"value": "0756549580",
 									"type": "text"
 								},
 								{
@@ -212,10 +223,16 @@
 					"name": "Fetch User By Phone No.",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwNzU2NTQ5NTgwNiIsInJvbGUiOlsiQURNSU4iXSwiZXhwIjoxNjUyMzc1NjA3fQ.H7sthfj-NIVzUbnrKZR7UC3bjpQglc7tgKXf7AY1ZGM",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"phoneNumber\":\"0755459580\"\r\n}",
+							"raw": "{\r\n    \"phoneNumber\":\"07565495806\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -249,7 +266,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/warehouse/4",
+							"raw": "http://localhost:8080/api/warehouse/get/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -258,6 +275,7 @@
 							"path": [
 								"api",
 								"warehouse",
+								"get",
 								"4"
 							]
 						}
@@ -271,7 +289,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Juja\",\r\n    \"location\":\"Juja, Kenya\"\r\n}",
+							"raw": "{\r\n    \"name\":\"Juja 2\",\r\n    \"location\":\"Juja, Kenya\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -320,7 +338,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/warehouse/3",
+							"raw": "http://localhost:8080/api/warehouse/43",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -329,7 +347,7 @@
 							"path": [
 								"api",
 								"warehouse",
-								"3"
+								"43"
 							]
 						}
 					},
@@ -421,6 +439,9 @@
 				{
 					"name": "Create Order",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -466,7 +487,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/api/order/18",
+							"raw": "http://localhost:8080/api/order/get/18",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -475,6 +496,7 @@
 							"path": [
 								"api",
 								"order",
+								"get",
 								"18"
 							]
 						}
@@ -563,7 +585,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/inventory/37",
+							"raw": "http://localhost:8080/api/inventory/get/37",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -572,6 +594,7 @@
 							"path": [
 								"api",
 								"inventory",
+								"get",
 								"37"
 							]
 						}
@@ -687,11 +710,14 @@
 				{
 					"name": "Get OTP",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"ian@g.com\",\r\n    \"name\":\"Ian\",\r\n    \"phoneNumber\":\"+254714099359\"\r\n}",
+							"raw": "{\r\n    \"name\":\"Ian\",\r\n    \"phoneNumber\":\"+254714099358\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -853,28 +879,35 @@
 			"item": [
 				{
 					"name": "Refresh Token",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwNzU1NDU5NTgwIiwiZXhwIjoxNjUyMjg4MTY5fQ._qSNKlj6RhZk0mdbn4XgIfbl3uOIDE--mna8HpPceI8",
-								"type": "text"
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let access_token = pm.response.headers.get(\"access_token\");\r",
+									"let refresh_token = pm.response.headers.get(\"refresh_token\");\r",
+									"console.log(access_token);\r",
+									"console.log(refresh_token);\r",
+									"pm.globals.set(\"access_token\",access_token);\r",
+									"pm.globals.set(\"refresh_token\",refresh_token);"
+								],
+								"type": "text/javascript"
 							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "",
-									"value": "",
-									"type": "text"
+									"key": "token",
+									"value": "{{refresh_token}}",
+									"type": "string"
 								}
 							]
 						},
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "http://localhost:8080/refreshtoken",
 							"protocol": "http",
@@ -889,7 +922,60 @@
 					},
 					"response": []
 				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
 			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{access_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }

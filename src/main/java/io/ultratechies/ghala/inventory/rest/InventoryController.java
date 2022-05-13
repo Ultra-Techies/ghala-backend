@@ -25,7 +25,7 @@ public class InventoryController {
     private final WarehouseService warehouseService;
 
     @ApiOperation("Get Inventory item by Id")
-    @GetMapping("/{itemId}")
+    @GetMapping("/get/{itemId}")
     public Optional<Inventory> getInventoryById(@ApiParam(name="id", required = true,example = "1")
                                                    @PathVariable Long itemId){
         return inventoryService.getInventoryItemBySku(itemId);
