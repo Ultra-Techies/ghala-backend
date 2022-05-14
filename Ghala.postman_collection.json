@@ -39,7 +39,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"idhfggfttgre@com\",\r\n    \"phoneNumber\":\"0756549580\",\r\n    \"assignedWarehouse\":43,\r\n    \"password\":\"jkf\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"profilePhoto\": [-23,-34,56,78,78]\r\n}",
+							"raw": "{\r\n    \"email\":\"idhfggftt@com\",\r\n    \"phoneNumber\":\"07565495860\",\r\n    \"password\":\"jkf\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"profilePhoto\": [-23,-34,56,78,78]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -114,7 +114,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"id\": 42,\r\n        \"firstName\": \"Johny\",\r\n        \"lastName\": \"Doeooo\",\r\n        \"profilePhoto\": [23,45,67,675,89,90]\r\n}",
+							"raw": "{\r\n        \"id\": 41,\r\n        \"email\": \"idhfggre@com\",\r\n        \"phoneNumber\": \"07565495806\",\r\n        \"assignedWarehouse\": 31,\r\n        \"password\": \"jkf\",\r\n        \"role\": \"ADMIN\",\r\n        \"firstName\": \"John\",\r\n        \"lastName\": \"Doe\",\r\n        \"profilePhoto\": [\r\n            -23,\r\n            -34,\r\n            56,\r\n            78,\r\n            78\r\n        ]}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -195,7 +195,7 @@
 							"urlencoded": [
 								{
 									"key": "phoneNumber",
-									"value": "0756549580",
+									"value": "07565495806",
 									"type": "text"
 								},
 								{
@@ -420,7 +420,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/api/order/wh/3",
+							"raw": "http://localhost:8080/api/order/wh/33",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -430,7 +430,7 @@
 								"api",
 								"order",
 								"wh",
-								"3"
+								"33"
 							]
 						}
 					},
@@ -487,7 +487,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/api/order/get/18",
+							"raw": "http://localhost:8080/api/order/get/188",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -497,7 +497,7 @@
 								"api",
 								"order",
 								"get",
-								"18"
+								"188"
 							]
 						}
 					},
@@ -608,7 +608,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Pika\",\r\n    \"category\":\"Cooking Oil\",\r\n    \"quantity\":\"1000\",\r\n    \"ppu\":\"20\",\r\n    \"warehouseId\":\"31\",\r\n    \"image\":[45,56,78,56,45]\r\n}",
+							"raw": "{\r\n    \"name\":\"Pika\",\r\n    \"category\":\"Cooking Oil\",\r\n    \"quantity\":\"1000\",\r\n    \"ppu\":20,\r\n    \"warehouseId\":43,\r\n    \"image\":[45,56,78,56,45]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -795,12 +795,12 @@
 					"response": []
 				},
 				{
-					"name": "Fetch all Notes",
+					"name": "Fetch all Notes By WH Id",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/deliverynotes/all",
+							"raw": "http://localhost:8080/api/deliverynotes/wh/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -809,7 +809,8 @@
 							"path": [
 								"api",
 								"deliverynotes",
-								"all"
+								"wh",
+								"4"
 							]
 						}
 					},

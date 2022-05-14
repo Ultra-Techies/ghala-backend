@@ -31,6 +31,8 @@ public class OrderService {
     }
 
     public List<Orders> getOrdersByWarehouse(Long warehouseId){
+        warehouseRepository.findById(warehouseId)
+                .orElseThrow(()->new IllegalArgumentException("Warehouse with ID: "+warehouseId +" does not exist!"));
         return orderRepository.findAllByWarehouseId(warehouseId);
     }
 

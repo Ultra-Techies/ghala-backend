@@ -22,7 +22,7 @@ public class DeliveryNotesController {
     private final DeliveryNoteService deliveryNoteService;
 
     @ApiOperation("Fetch a Delivery Note")
-    @GetMapping("/{deliveryNoteId}")
+    @GetMapping("/get/{deliveryNoteId}")
     public Optional<DeliveryNote> getDeliveryNote(@ApiParam(name="delivery note id", required = true,example = "1")
                                                   @PathVariable Long deliveryNoteId){
         return deliveryNoteService.getDeliveryNoteById(deliveryNoteId);
@@ -43,10 +43,10 @@ public class DeliveryNotesController {
             return deliveryNoteService.changeStatusToProcessing(noteId);
         }else throw new IllegalArgumentException("Unknown operation"+operation);
     }
-    @GetMapping("/all")
-    public List<DeliveryNote> getAllNotes()
+    @GetMapping("/wh/{warehouseId}")
+    public List<DeliveryNote> getAllNotes(@PathVariable Long warehouseId)
     {
-        return deliveryNoteService.getAllNotes();
+        return deliveryNoteService.getAllNotesByWarehouse(warehouseId);
     }
 
 

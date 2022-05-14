@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.NestedServletException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -24,6 +25,7 @@ import java.util.Map;
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
@@ -53,11 +55,16 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                     filterChain.doFilter(request,response);
                 }catch (Exception e){
-                    log.error("Error ing in {}",e.getMessage());
+                    log.error(e.getClass().toString());
                     response.setHeader("Error",e.getMessage());
-                    response.setStatus(FORBIDDEN.value());
                     Map<String, String> error = new HashMap<>();
-                    error.put("error_message", e.getMessage());
+                    if (e instanceof NestedServletException){
+                        error.put("error_message", ((NestedServletException) e).getRootCause().getMessage());
+                        response.setStatus(INTERNAL_SERVER_ERROR.value());
+                    }else {
+                        error.put("error_message", e.getMessage());
+                        response.setStatus(FORBIDDEN.value());
+                    }
                     response.setContentType(APPLICATION_JSON_VALUE);
                     new ObjectMapper().writeValue(response.getOutputStream(), error);
                 }

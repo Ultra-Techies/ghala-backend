@@ -14,6 +14,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.List;
 
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -32,7 +35,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.cors().configurationSource(request -> {
+            var cors = new CorsConfiguration();
+            cors.setAllowedOrigins(List.of("http://localhost:4200", "http://example.com"));
+            cors.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "OPTIONS"));
+            cors.setAllowedHeaders(List.of("*"));
+            return cors;
+        });
         http.csrf().disable();
+
         http.sessionManagement().sessionCreationPolicy(STATELESS);
 
         // permit all, non-secured
@@ -96,7 +107,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority("DISPATCH_ASSOCIATE","WH_ASSOCIATE");
         http.authorizeRequests().antMatchers(POST,"/api/deliverynotes")
                 .hasAnyAuthority("DISPATCH_ASSOCIATE","WH_ASSOCIATE");
-        http.authorizeRequests().antMatchers(GET,"/api/deliverynotes/all")
+        http.authorizeRequests().antMatchers(GET,"/api/deliverynotes/wh/**")
                 .hasAnyAuthority("ADMIN","WH_MANAGER","SUPERVISOR","DISPATCH_ASSOCIATE","WH_ASSOCIATE");
         http.authorizeRequests().antMatchers(PUT,"/api/deliverynotes")
                 .hasAnyAuthority("DISPATCH_ASSOCIATE","WH_ASSOCIATE");

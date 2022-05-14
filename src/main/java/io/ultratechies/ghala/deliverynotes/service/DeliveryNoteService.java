@@ -12,16 +12,13 @@ import io.ultratechies.ghala.orders.repository.OrderRepository;
 import io.ultratechies.ghala.warehouse.repository.WarehouseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.text.DecimalFormat;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -69,8 +66,9 @@ public class DeliveryNoteService {
                 .orElseThrow(() -> new IllegalArgumentException("Note with Requested Id does not exist!")));
     }
 
-    public List<DeliveryNote> getAllNotes(){
-        return deliveryNoteRepository.findAll();
+    public List<DeliveryNote> getAllNotesByWarehouse(Long warehouseId){
+
+        return deliveryNoteRepository.findAllByWarehouseId(warehouseId);
     }
 
 

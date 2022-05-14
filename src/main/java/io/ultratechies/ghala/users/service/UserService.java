@@ -2,6 +2,7 @@ package io.ultratechies.ghala.users.service;
 
 import io.ultratechies.ghala.enums.RolesEnum;
 import io.ultratechies.ghala.users.domain.UpdateUserDTO;
+import io.ultratechies.ghala.users.domain.UserResponseDTO;
 import io.ultratechies.ghala.users.domain.Users;
 import io.ultratechies.ghala.users.repository.UserRepository;
 import io.ultratechies.ghala.warehouse.repository.WarehouseRepository;
@@ -30,11 +31,14 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
 
     }
-    public Optional<Users> getUserById(Long id){
+    public ResponseEntity getUserById(Long id){
 
-       Users user=userRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("User with Id "+id +" does not exist!"));
-       return Optional.ofNullable(user);
+       Optional<Users> user=userRepository.findById(id);
+       Boolean exists=user.isPresent();
+        if(!exists){
+            throw new IllegalArgumentException("User with Id "+id +" does not exist!");
+        }
+        return ResponseEntity.ok(user.map(this::convertResponse));
     }
 
     public Map<String,String> saveUser(Users user){
@@ -46,14 +50,15 @@ public class UserService implements UserDetailsService {
         if (userByPhone.isPresent()){
             throw new IllegalStateException("User with Phone Number exists!");
         }
+        if (user.getAssignedWarehouse()!=null){
+            throw new IllegalArgumentException("WH cannot be assigned at creation!");
+        }
         Boolean firstUser=userRepository.findAll().isEmpty();
         if (firstUser){
             user.setRole(RolesEnum.ADMIN);
         }else {
-        user.setRole(RolesEnum.BASIC);
+            user.setRole(RolesEnum.BASIC);
             }
-        warehouseRepository.findById(user.getAssignedWarehouse().longValue())
-                .orElseThrow(()->new IllegalStateException("Warehouse with Id: "+ user.getAssignedWarehouse() +" Does not exist!"));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Users newUser=userRepository.save(user);
         Map map = new HashMap<>();
@@ -80,7 +85,7 @@ public class UserService implements UserDetailsService {
         if(!exists){
             throw new IllegalArgumentException("User with Phone Number does not exist!");
         }
-        return ResponseEntity.ok(userByPhone);
+        return ResponseEntity.ok(userByPhone.map(this::convertResponse));
 
     }
 
@@ -97,11 +102,7 @@ public class UserService implements UserDetailsService {
             }
             user.setEmail(updateUserDTO.getEmail());
             }
-        if (updateUserDTO.getPhoneNumber() != null &&
-                updateUserDTO.getPhoneNumber().length() > 0 &&
-                !Objects.equals(user.getPhoneNumber(),updateUserDTO.getPhoneNumber())) {
-            user.setPhoneNumber(updateUserDTO.getPhoneNumber());
-        }
+
         if (updateUserDTO.getAssignedWarehouse() != null &&
                 !Objects.equals(user.getAssignedWarehouse(),updateUserDTO.getAssignedWarehouse())) {
             user.setAssignedWarehouse(updateUserDTO.getAssignedWarehouse());
@@ -109,7 +110,7 @@ public class UserService implements UserDetailsService {
         if (updateUserDTO.getPassword() != null &&
                 updateUserDTO.getPassword().length() > 0 &&
                 !Objects.equals(user.getPassword(),updateUserDTO.getPassword())) {
-            user.setPassword(updateUserDTO.getPassword());
+            user.setPassword(passwordEncoder.encode(updateUserDTO.getPassword()));
         }
         if (updateUserDTO.getFirstName() != null &&
                 updateUserDTO.getFirstName().length() > 0 &&
@@ -120,6 +121,10 @@ public class UserService implements UserDetailsService {
                 updateUserDTO.getLastName().length() > 0 &&
                 !Objects.equals(user.getLastName(),updateUserDTO.getLastName())) {
             user.setLastName(updateUserDTO.getLastName());
+        }
+        if (updateUserDTO.getRole() != null &&
+                !Objects.equals(user.getRole(),updateUserDTO.getRole())) {
+            user.setRole(updateUserDTO.getRole());
         }
         if (updateUserDTO.getProfilePhoto() != null &&
                 !Objects.equals(user.getProfilePhoto(),updateUserDTO.getProfilePhoto())) {
@@ -135,5 +140,20 @@ public class UserService implements UserDetailsService {
         authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
         return new org.springframework.security.core.userdetails.User(user.getPhoneNumber(),
                 user.getPassword(), authorities);
+    }
+
+    private UserResponseDTO convertResponse(Users user){
+        UserResponseDTO userResponseDTO = new UserResponseDTO();
+        userResponseDTO.setId(user.getId());
+        userResponseDTO.setPhoneNumber(user.getPhoneNumber());
+        userResponseDTO.setAssignedWarehouse(user.getAssignedWarehouse());
+        userResponseDTO.setEmail(user.getEmail());
+        userResponseDTO.setFirstName(user.getFirstName());
+        userResponseDTO.setLastName(user.getLastName());
+        userResponseDTO.setRole(user.getRole());
+        userResponseDTO.setProfilePhoto(user.getProfilePhoto());
+
+        return userResponseDTO;
+
     }
 }
