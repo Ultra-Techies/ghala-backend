@@ -33,7 +33,6 @@ public class Users {
     private String email;
     private String phoneNumber;
     private Integer assignedWarehouse;
-    @JsonIgnore
     private String password;
     @Enumerated(EnumType.STRING)
     private RolesEnum role;
