@@ -114,7 +114,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         //stats
         http.authorizeRequests().antMatchers(GET,"/api/stats/**")
-                .hasAnyAuthority("ADMIN","WH_MANAGER","SUPERVISOR","DISPATCH_ASSOCIATE","WH_ASSOCIATE");
+                .hasAnyAuthority("ADMIN","WH_MANAGER","SUPERVISOR","DISPATCH_ASSOCIATE","WH_ASSOCIATE","BASIC");
 
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
