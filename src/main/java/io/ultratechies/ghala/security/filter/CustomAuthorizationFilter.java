@@ -24,8 +24,7 @@ import java.util.Map;
 
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
@@ -63,7 +62,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                         response.setStatus(INTERNAL_SERVER_ERROR.value());
                     }else {
                         error.put("error_message", e.getMessage());
-                        response.setStatus(FORBIDDEN.value());
+                        response.setStatus(UNAUTHORIZED.value());
                     }
                     response.setContentType(APPLICATION_JSON_VALUE);
                     new ObjectMapper().writeValue(response.getOutputStream(), error);
