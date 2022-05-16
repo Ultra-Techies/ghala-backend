@@ -14,7 +14,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/user/2",
+							"raw": "http://localhost:8080/api/users/42",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -22,8 +22,8 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"user",
-								"2"
+								"users",
+								"42"
 							]
 						}
 					},
@@ -33,51 +33,19 @@
 					"name": "Create User",
 					"request": {
 						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "password",
-									"value": "49a2eb96-8182-43e4-af2e-da1a2bbb972d",
-									"type": "string"
-								},
-								{
-									"key": "username",
-									"value": "user",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"idhggt@com\",\r\n    \"phoneNumber\":\"07980\",\r\n    \"assignedWarehouse\":3,\r\n    \"password\":\"jkf\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"profilePhoto\": [23,34,56,78,78]\r\n}",
+							"raw": "{\r\n    \"email\":\"idhfggftt@com\",\r\n    \"phoneNumber\":\"07565495860\",\r\n    \"password\":\"jkf\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"profilePhoto\": [-23,-34,56,78,78]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8080/api/user",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Fetch all users",
-					"request": {
-						"method": "GET",
-						"header": [],
 						"url": {
 							"raw": "http://localhost:8080/api/users",
 							"protocol": "http",
@@ -94,12 +62,12 @@
 					"response": []
 				},
 				{
-					"name": "Get User By Id",
+					"name": "Fetch all users",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/user/1",
+							"raw": "http://localhost:8080/api/users/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -107,8 +75,33 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"user",
-								"1"
+								"users",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users/get/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"get",
+								"6"
 							]
 						}
 					},
@@ -121,7 +114,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"id\": 1,\r\n        \"email\": \"idhgtio@jk.com\",\r\n        \"phoneNumber\": \"7980\",\r\n        \"assignedWarehouse\": 3,\r\n        \"password\": \"jkf\",\r\n        \"role\": \"BASIC\",\r\n        \"firstName\": \"John\",\r\n        \"lastName\": \"Doe\",\r\n        \"profilePhoto\": [23,45,67,67,89,90]\r\n}",
+							"raw": "{\r\n        \"id\": 41,\r\n        \"email\": \"idhfggre@com\",\r\n        \"phoneNumber\": \"07565495806\",\r\n        \"assignedWarehouse\": 31,\r\n        \"password\": \"jkf\",\r\n        \"role\": \"ADMIN\",\r\n        \"firstName\": \"John\",\r\n        \"lastName\": \"Doe\",\r\n        \"profilePhoto\": [\r\n            -23,\r\n            -34,\r\n            56,\r\n            78,\r\n            78\r\n        ]}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -129,7 +122,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/user",
+							"raw": "http://localhost:8080/api/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -137,7 +130,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"user"
+								"users"
 							]
 						}
 					},
@@ -158,7 +151,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/users",
+							"raw": "http://localhost:8080/api/users/exists",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -166,20 +159,80 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"users"
+								"users",
+								"exists"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Verify User",
+					"name": "Verify User/ Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let access_token = pm.response.headers.get(\"access_token\");\r",
+									"let refresh_token = pm.response.headers.get(\"refresh_token\");\r",
+									"console.log(access_token);\r",
+									"console.log(refresh_token);\r",
+									"pm.globals.set(\"access_token\",access_token);\r",
+									"pm.globals.set(\"refresh_token\",refresh_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
-						"method": "PUT",
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
 						"header": [],
 						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "phoneNumber",
+									"value": "07565495806",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "jkf",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch User By Phone No.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwNzU2NTQ5NTgwNiIsInJvbGUiOlsiQURNSU4iXSwiZXhwIjoxNjUyMzc1NjA3fQ.H7sthfj-NIVzUbnrKZR7UC3bjpQglc7tgKXf7AY1ZGM",
+								"type": "text"
+							}
+						],
+						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"phoneNumber\":\"07980\",\r\n    \"password\":\"4000\"\r\n}",
+							"raw": "{\r\n    \"phoneNumber\":\"07565495806\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -187,7 +240,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/users",
+							"raw": "http://localhost:8080/api/users/fetch",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -195,7 +248,8 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"users"
+								"users",
+								"fetch"
 							]
 						}
 					},
@@ -212,7 +266,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/warehouse/4",
+							"raw": "http://localhost:8080/api/warehouse/get/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -221,6 +275,7 @@
 							"path": [
 								"api",
 								"warehouse",
+								"get",
 								"4"
 							]
 						}
@@ -234,7 +289,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Juja\",\r\n    \"location\":\"Juja, Kenya\"\r\n}",
+							"raw": "{\r\n    \"name\":\"Juja 2\",\r\n    \"location\":\"Juja, Kenya\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -262,7 +317,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/warehouses",
+							"raw": "http://localhost:8080/api/warehouse/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -270,7 +325,8 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"warehouses"
+								"warehouse",
+								"all"
 							]
 						}
 					},
@@ -282,7 +338,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/warehouse/3",
+							"raw": "http://localhost:8080/api/warehouse/43",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -291,7 +347,7 @@
 							"path": [
 								"api",
 								"warehouse",
-								"3"
+								"43"
 							]
 						}
 					},
@@ -337,7 +393,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/orders",
+							"raw": "http://localhost:8080/api/order/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -345,7 +401,8 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"orders"
+								"order",
+								"all"
 							]
 						}
 					},
@@ -355,9 +412,15 @@
 					"name": "Get Orders By WH Id",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer jfnjgdffg",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://localhost:8080/api/warehouseorders/5",
+							"raw": "http://localhost:8080/api/order/wh/33",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -365,8 +428,9 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"warehouseorders",
-								"5"
+								"order",
+								"wh",
+								"33"
 							]
 						}
 					},
@@ -375,11 +439,14 @@
 				{
 					"name": "Create Order",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"due\":\"2022-04-29\",\r\n    \"deliveryWindow\":\"MORNING\",\r\n    \"customerName\":\"3RT\",\r\n    \"items\":[{\r\n        \"sku\":1,\r\n        \"quantity\":3\r\n    }, {\r\n        \"sku\":2,\r\n        \"quantity\":30\r\n    }],\r\n    \"route\":\"route1\",\r\n    \"warehouseId\":\"3\"\r\n}",
+							"raw": "{\r\n    \"due\":\"2022-04-29\",\r\n    \"deliveryWindow\":\"MORNING\",\r\n    \"customerName\":\"3RT\",\r\n    \"items\":[{\r\n        \"sku\":1,\r\n        \"quantity\":3\r\n    }, {\r\n        \"sku\":2,\r\n        \"quantity\":30\r\n    }],\r\n    \"route\":\"route1\",\r\n    \"warehouseId\":\"5\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -405,9 +472,22 @@
 					"name": "Get Order By Id",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "access_token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwNzU1NDU5NTgwIiwicm9sZSI6WyJCQVNJQyJdLCJleHAiOjE2NTIyNzU0MzJ9.2sgzRhtn2bBXCNgCu8Rx62r7h42mA4Xqt",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "refresh_token",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwNzU1NDU5NTgwIiwiZXhwIjoxNjUyMjc1OTcyfQ.knt1tv12rFelA4mi8_ZRI0f8_Iz3dqIkUXsyvn02jRg",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"url": {
-							"raw": "http://localhost:8080/api/order/18",
+							"raw": "http://localhost:8080/api/order/get/188",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -416,7 +496,8 @@
 							"path": [
 								"api",
 								"order",
-								"18"
+								"get",
+								"188"
 							]
 						}
 					},
@@ -483,7 +564,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/allinventory",
+							"raw": "http://localhost:8080/api/inventory/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -491,7 +572,8 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"allinventory"
+								"inventory",
+								"all"
 							]
 						}
 					},
@@ -503,7 +585,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/inventory/14",
+							"raw": "http://localhost:8080/api/inventory/get/37",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -512,7 +594,8 @@
 							"path": [
 								"api",
 								"inventory",
-								"14"
+								"get",
+								"37"
 							]
 						}
 					},
@@ -525,7 +608,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Coke\",\r\n    \"category\":\"Beverages\",\r\n    \"quantity\":\"1000\",\r\n    \"ppu\":\"2340\",\r\n    \"warehouseId\":\"5\",\r\n    \"image\":[45,56,78,56,45]\r\n}",
+							"raw": "{\r\n    \"name\":\"Pika\",\r\n    \"category\":\"Cooking Oil\",\r\n    \"quantity\":\"1000\",\r\n    \"ppu\":20,\r\n    \"warehouseId\":43,\r\n    \"image\":[45,56,78,56,45]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -603,7 +686,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/allWHinventory/5",
+							"raw": "http://localhost:8080/api/inventory/wh/31",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -611,8 +694,9 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"allWHinventory",
-								"5"
+								"inventory",
+								"wh",
+								"31"
 							]
 						}
 					},
@@ -626,11 +710,14 @@
 				{
 					"name": "Get OTP",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"ian@g.com\",\r\n    \"name\":\"Ian\",\r\n    \"phoneNumber\":\"+254714099358\"\r\n}",
+							"raw": "{\r\n    \"name\":\"Ian\",\r\n    \"phoneNumber\":\"+254714099358\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -663,7 +750,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/deliveryNote/14",
+							"raw": "http://localhost:8080/api/deliverynotes/29",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -671,8 +758,8 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"deliveryNote",
-								"14"
+								"deliverynotes",
+								"29"
 							]
 						}
 					},
@@ -685,7 +772,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"route\":\"A1\",\r\n    \"orderIds\":[3,4],\r\n    \"deliverWindow\":\"MORNING\",\r\n    \"warehouseId\":4\r\n}",
+							"raw": "{\r\n    \"route\":\"A1\",\r\n    \"orderIds\":[3,4],\r\n    \"deliveryWindow\":\"MORNING\",\r\n    \"warehouseId\":3\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -693,7 +780,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/deliveryNote",
+							"raw": "http://localhost:8080/api/deliverynotes",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -701,19 +788,19 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"deliveryNote"
+								"deliverynotes"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Fetch all Notes",
+					"name": "Fetch all Notes By WH Id",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/allnotes",
+							"raw": "http://localhost:8080/api/deliverynotes/wh/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -721,7 +808,9 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"allnotes"
+								"deliverynotes",
+								"wh",
+								"4"
 							]
 						}
 					},
@@ -742,7 +831,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/deliveryNote/15/1",
+							"raw": "http://localhost:8080/api/deliverynotes/14/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -750,8 +839,8 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"deliveryNote",
-								"15",
+								"deliverynotes",
+								"14",
 								"1"
 							]
 						}
@@ -759,6 +848,135 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Stats",
+			"item": [
+				{
+					"name": "Request Stats By WH Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/stats/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"stats",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Security",
+			"item": [
+				{
+					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let access_token = pm.response.headers.get(\"access_token\");\r",
+									"let refresh_token = pm.response.headers.get(\"refresh_token\");\r",
+									"console.log(access_token);\r",
+									"console.log(refresh_token);\r",
+									"pm.globals.set(\"access_token\",access_token);\r",
+									"pm.globals.set(\"refresh_token\",refresh_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{refresh_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/refreshtoken",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"refreshtoken"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{access_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }

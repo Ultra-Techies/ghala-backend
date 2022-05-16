@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ public class WarehouseResource {
     private final WarehouseService warehouseService;
 
     @ApiOperation("Fetch Warehouse Info by ID")
-    @GetMapping("/{warehouseId}")
+    @GetMapping("/get/{warehouseId}")
     public ResponseEntity<Optional<Warehouse>> getWarehouseById(@ApiParam(name="id", required = true,example = "1")
                                                                 @PathVariable Long warehouseId){
         var wh=warehouseService.getWarehouseById(warehouseId);
@@ -46,6 +47,13 @@ public class WarehouseResource {
     public ResponseEntity updateWarehouse(@RequestBody UpdateWarehouseDTO updateWarehouseDTO){
         warehouseService.updateWarehouse(updateWarehouseDTO);
         return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation("Get All Warehouses")
+    @GetMapping("/all")
+    public ResponseEntity<List<Warehouse>> getAllWarehouses(){
+        var whs = warehouseService.getAllWarehouses();
+        return ResponseEntity.ok(whs);
     }
 
 

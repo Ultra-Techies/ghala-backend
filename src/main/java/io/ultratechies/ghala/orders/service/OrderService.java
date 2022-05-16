@@ -6,6 +6,7 @@ import io.ultratechies.ghala.inventory.repository.InventoryRepository;
 import io.ultratechies.ghala.orders.domain.Orders;
 import io.ultratechies.ghala.orders.domain.UpdateOrderDTO;
 import io.ultratechies.ghala.orders.repository.OrderRepository;
+import io.ultratechies.ghala.warehouse.repository.WarehouseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +24,15 @@ public class OrderService {
     @Autowired
     private final OrderRepository orderRepository;
     private final InventoryRepository inventoryRepository;
+    private final WarehouseRepository warehouseRepository;
 
     public List<Orders> getAllOrders(){
         return orderRepository.findAll();
     }
 
     public List<Orders> getOrdersByWarehouse(Long warehouseId){
+        warehouseRepository.findById(warehouseId)
+                .orElseThrow(()->new IllegalArgumentException("Warehouse with ID: "+warehouseId +" does not exist!"));
         return orderRepository.findAllByWarehouseId(warehouseId);
     }
 
@@ -45,6 +49,11 @@ public class OrderService {
         order.setValue(0);
         order.getItems()
                 .forEach(item ->{   Inventory inventoryItem=inventoryRepository.findBySku(item.getSku());
+                                    if (! inventoryItem.getWarehouseId().equals(order.getWarehouseId())){
+                                        throw new IllegalArgumentException("Item with SKU "+inventoryItem.getSku()
+                                        +" is not in warehouse with Id "+ order.getWarehouseId()
+                                                + " but in WH "+ inventoryItem.getWarehouseId());
+                                    }
                                     item.setName(inventoryItem.getName());
                                     item.setPpu(inventoryItem.getPpu());
                                     item.setTotalPrice(item.getPpu()*item.getQuantity());
@@ -52,6 +61,8 @@ public class OrderService {
         order.setStatus(OrderStatus.SUBMITTED);
         order.setCreatedDate(LocalDate.now());
         order.setCreatedTime(LocalTime.now());
+        warehouseRepository.findById(order.getWarehouseId())
+                .orElseThrow(()->new IllegalStateException("Warehouse with Id: "+ order.getWarehouseId() +" Does not exist!"));
         Orders newOrder =orderRepository.save(order);
         newOrder.setOrderCode("GH"+ randomNo()+"OS"+newOrder.getId());
         Map map = new HashMap<>();

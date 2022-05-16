@@ -1,5 +1,6 @@
 package io.ultratechies.ghala.users.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.ultratechies.ghala.enums.RolesEnum;
 import io.ultratechies.ghala.roles.domain.Roles;
 import lombok.*;
