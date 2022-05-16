@@ -104,13 +104,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // delivery notes
         http.authorizeRequests().antMatchers(GET,"/api/deliverynotes/get/**")
-                .hasAnyAuthority("DISPATCH_ASSOCIATE","WH_ASSOCIATE");
+                .hasAnyAuthority("ADMIN","DISPATCH_ASSOCIATE","WH_ASSOCIATE");
         http.authorizeRequests().antMatchers(POST,"/api/deliverynotes")
-                .hasAnyAuthority("DISPATCH_ASSOCIATE","WH_ASSOCIATE");
+                .hasAnyAuthority("ADMIN","DISPATCH_ASSOCIATE","WH_ASSOCIATE");
         http.authorizeRequests().antMatchers(GET,"/api/deliverynotes/wh/**")
-                .hasAnyAuthority("ADMIN","WH_MANAGER","SUPERVISOR","DISPATCH_ASSOCIATE","WH_ASSOCIATE");
+                .hasAnyAuthority("ADMIN","ADMIN","WH_MANAGER","SUPERVISOR","DISPATCH_ASSOCIATE","WH_ASSOCIATE");
         http.authorizeRequests().antMatchers(PUT,"/api/deliverynotes")
-                .hasAnyAuthority("DISPATCH_ASSOCIATE","WH_ASSOCIATE");
+                .hasAnyAuthority("ADMIN","DISPATCH_ASSOCIATE","WH_ASSOCIATE");
 
         //stats
         http.authorizeRequests().antMatchers(GET,"/api/stats/**")
