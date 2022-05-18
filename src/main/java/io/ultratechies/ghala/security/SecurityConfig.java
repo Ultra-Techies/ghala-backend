@@ -68,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(POST,"/api/warehouse")
                 .hasAuthority("ADMIN");
         http.authorizeRequests().antMatchers(GET,"/api/warehouse/all")
-                .hasAnyAuthority("ADMIN","SUPERVISOR");
+                .hasAnyAuthority("ADMIN","SUPERVISOR","WH_MANAGER");
         http.authorizeRequests().antMatchers(DELETE,"/api/warehouse/**")
                 .hasAuthority("ADMIN");
         http.authorizeRequests().antMatchers(PUT,"/api/warehouse")
@@ -106,7 +106,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(GET,"/api/deliverynotes/get/**")
                 .hasAnyAuthority("ADMIN","DISPATCH_ASSOCIATE","WH_ASSOCIATE");
         http.authorizeRequests().antMatchers(POST,"/api/deliverynotes")
-                .hasAnyAuthority("ADMIN","DISPATCH_ASSOCIATE","WH_ASSOCIATE");
+                .hasAnyAuthority("ADMIN","WH_MANAGER","DISPATCH_ASSOCIATE","WH_ASSOCIATE");
         http.authorizeRequests().antMatchers(GET,"/api/deliverynotes/wh/**")
                 .hasAnyAuthority("ADMIN","ADMIN","WH_MANAGER","SUPERVISOR","DISPATCH_ASSOCIATE","WH_ASSOCIATE");
         http.authorizeRequests().antMatchers(PUT,"/api/deliverynotes")
